@@ -1,3 +1,11 @@
 <Solution>
+  <Folder Name="/docs/">
+    <File Path="Architecture.md" />
+  </Folder>
+  <Folder Name="/logs/" />
+  <Folder Name="/profiles/" />
+  <Folder Name="/repository/" />
+  <Folder Name="/tools/" />
+  <Folder Name="/tools/adb/" />
   <Project Path="GeelyEasyToolkit/GeelyEasyToolkit.csproj" />
 </Solution>

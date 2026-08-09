@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="GeelyEasyToolkit.Views.ConnectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="30">
+
+        <StackPanel>
+
+            <TextBlock Text="Подключение автомобиля"
+                       FontSize="30"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <TextBlock Text="Следуйте шагам мастера подключения."
+                       Margin="0,10,0,25"
+                       Foreground="LightGray"/>
+
+            <Border Background="#3A4050"
+                    CornerRadius="10"
+                    Padding="20">
+
+                <StackPanel>
+
+                    <TextBlock Text="① Подключите автомобиль по USB"
+                               FontSize="18"
+                               Foreground="White"
+                               Margin="0,8"/>
+
+                    <TextBlock Text="② Включите зажигание"
+                               FontSize="18"
+                               Foreground="White"
+                               Margin="0,8"/>
+
+                    <TextBlock Text="③ Нажмите кнопку проверки"
+                               FontSize="18"
+                               Foreground="White"
+                               Margin="0,8"/>
+                    
+
+                </StackPanel>
+
+            </Border>
+
+            <Button x:Name="CheckConnectionButton"
+                    Content="Проверить подключение"
+                    Width="240"
+                    Height="45"
+                    Margin="0,25,0,0"
+                    HorizontalAlignment="Left"
+                    Click="CheckConnection_Click"/>
+
+            <TextBlock x:Name="StatusText"
+                       Text="Автомобиль не подключен."
+                       Margin="0,20,0,0"
+                       FontSize="16"
+                       Foreground="Orange"/>
+            <TextBlock x:Name="ModelText"
+           Text="Модель:"
+           Margin="0,10,0,0"
+           Foreground="White"/>
+
+            <TextBlock x:Name="ManufacturerText"
+           Text="Производитель:"
+           Foreground="White"/>
+
+            <TextBlock x:Name="AndroidText"
+           Text="Android:"
+           Foreground="White"/>
+
+            <TextBlock x:Name="BuildText"
+           Text="Build:"
+           Foreground="White"/>
+
+            <TextBlock x:Name="FirmwareText"
+           Text="Прошивка:"
+           Foreground="White"/>
+            <Button Content="Диагностика ADB"
+        Width="240"
+        Height="45"
+        Margin="0,10,0,0"
+        Click="Diagnostics_Click"/>
+            
+            <TextBlock Text="Журнал диагностики"
+           Margin="0,20,0,10"
+           FontSize="18"
+           FontWeight="Bold"
+           Foreground="White"/>
+
+            <TextBox x:Name="DiagnosticsOutput"
+         Height="220"
+         AcceptsReturn="True"
+         VerticalScrollBarVisibility="Auto"
+         HorizontalScrollBarVisibility="Auto"
+         IsReadOnly="True"
+         TextWrapping="Wrap"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,37 @@
+{
+  "Applications": [
+    {
+      "Name": "GStore",
+      "Category": "Launchers",
+      "Version": "1.1.6",
+      "FileName": "GStore1.1.6.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ]
+    },
+    {
+      "Name": "Яндекс Навигатор",
+      "Category": "Navigation",
+      "Version": "1.0",
+      "FileName": "yandex.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ]
+    },
+    {
+      "Name": "VLC",
+      "Category": "Players",
+      "Version": "3.0",
+      "FileName": "vlc.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ]
+    }
+  ]
+}

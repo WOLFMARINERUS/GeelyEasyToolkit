@@ -1,0 +1,9 @@
+{
+  "Name": "Cityray",
+  "Manufacturer": "Geely",
+  "AndroidVersion": "Unknown",
+  "Firmware": "Unknown",
+  "ConnectionMethod": "USB ADB",
+  "SupportsWirelessAdb": false,
+  "RequiresDeveloperMode": true
+}

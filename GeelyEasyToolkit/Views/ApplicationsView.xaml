@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="GeelyEasyToolkit.Views.ApplicationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="20">
+
+        <ListView x:Name="ApplicationsList">
+
+            <ListView.View>
+
+                <GridView>
+
+                    <GridViewColumn Header=""
+                Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                      HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Название"
+                Width="220"
+                DisplayMemberBinding="{Binding Name}"/>
+
+                    <GridViewColumn Header="Категория"
+                                    Width="120"
+                                    DisplayMemberBinding="{Binding Category}"/>
+
+                    <GridViewColumn Header="Версия"
+                                    Width="80"
+                                    DisplayMemberBinding="{Binding Version}"/>
+
+                </GridView>
+
+            </ListView.View>
+
+        </ListView>
+        
+        <Button x:Name="InstallButton"
+        Content="Установить выбранные приложения"
+        Width="280"
+        Height="40"
+        Margin="0,20,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Bottom"
+        Click="InstallButton_Click"/>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="GeelyEasyToolkit.Views.InstalledApplicationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="InstalledAppsList">
+
+            <ListView.View>
+
+                <GridView>
+
+                    <GridViewColumn Header="Название"
+                                Width="250"
+                                DisplayMemberBinding="{Binding Name}"/>
+
+                    <GridViewColumn Header="Package"
+                                Width="350"
+                                DisplayMemberBinding="{Binding PackageName}"/>
+
+                    <GridViewColumn Header="Version"
+                                Width="100"
+                                DisplayMemberBinding="{Binding Version}"/>
+
+                    <GridViewColumn Header="Действия"
+                                Width="180">
+
+                        <GridViewColumn.CellTemplate>
+
+                            <DataTemplate>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button Content="Запустить"
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,0,5,0"
+                                        Click="Launch_Click"/>
+
+                                    <Button Content="Удалить"
+                                        Width="70"
+                                        Height="30"
+                                        Click="UninstallItem_Click"/>
+
+                                </StackPanel>
+
+                            </DataTemplate>
+
+                        </GridViewColumn.CellTemplate>
+
+                    </GridViewColumn>
+
+                </GridView>
+
+            </ListView.View>
+
+        </ListView>
+
+
+        <StackPanel Grid.Row="1"
+                Orientation="Horizontal"
+                Margin="0,15,0,0">
+
+            <Button x:Name="RefreshButton"
+                Content="Обновить"
+                Width="120"
+                Height="35"
+                Click="RefreshButton_Click"/>
+
+            <TextBlock x:Name="StatusText"
+                   Text="Готово"
+                   Foreground="LightGray"
+                   VerticalAlignment="Center"
+                   Margin="25,0,40,0"/>
+
+            <Button Content="Удалить выбранное"
+                Width="140"
+                Height="35"
+                Click="Uninstall_Click"/>
+
+        </StackPanel>
+
+    </Grid>
+
+</UserControl>

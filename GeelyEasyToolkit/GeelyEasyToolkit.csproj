@@ -3,9 +3,34 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
+	  <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Repository\repository.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Repository\repository.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Data\" />
+    <Folder Include="Profiles\" />
+    <Folder Include="Repository\Launchers\" />
+    <Folder Include="Repository\Navigation\" />
+    <Folder Include="Repository\GNSS\" />
+    <Folder Include="Repository\Voice\" />
+    <Folder Include="Repository\Players\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Controls\" />
+  </ItemGroup>
 
 </Project>
