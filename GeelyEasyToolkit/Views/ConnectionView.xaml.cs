@@ -91,5 +91,46 @@ namespace GeelyEasyToolkit.Views
             BuildText.Text = $"Build: {info.BuildId}";
             FirmwareText.Text = $"Прошивка: {info.FirmwareVersion}";
         }
+
+        private void ExecuteAdbCommand_Click(
+    object sender,
+    RoutedEventArgs e)
+        {
+            string command =
+                AdbCommandTextBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(command))
+            {
+                System.Windows.MessageBox.Show(
+                    "Введите команду ADB.",
+                    "ADB",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+
+                return;
+            }
+
+            if (!AppServices.Adb.IsDeviceConnected())
+            {
+                System.Windows.MessageBox.Show(
+                    "Устройство не подключено.",
+                    "ADB",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+
+                return;
+            }
+
+            DiagnosticsOutput.AppendText(
+                $"\n\n> adb shell {command}\n");
+
+            string result =
+                AppServices.Adb.ExecuteShellCommand(command);
+
+            DiagnosticsOutput.AppendText(
+                result + "\n");
+
+            DiagnosticsOutput.ScrollToEnd();
+        }
     }
 }

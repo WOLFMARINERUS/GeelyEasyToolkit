@@ -8,6 +8,8 @@ namespace GeelyEasyToolkit.Models
 {
     public class InstalledApplication
     {
+        public bool IsSelected { get; set; }
+
         public string Name { get; set; } = "";
 
         public string PackageName { get; set; } = "";

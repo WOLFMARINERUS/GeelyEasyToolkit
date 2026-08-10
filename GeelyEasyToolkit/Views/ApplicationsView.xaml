@@ -4,48 +4,168 @@
 
     <Grid Margin="20">
 
-        <ListView x:Name="ApplicationsList">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- ============================================== -->
+        <!-- ПОИСК / СОРТИРОВКА / ВЫБОР ВСЕХ -->
+        <!-- ============================================== -->
+
+        <Grid Grid.Row="0"
+          Margin="0,0,0,15">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- Поиск -->
+
+            <Grid Grid.Column="0">
+
+                <TextBox x:Name="SearchTextBox"
+                     Height="36"
+                     Padding="10,5"
+                     VerticalContentAlignment="Center"
+                     Background="#3A4050"
+                     Foreground="White"
+                     BorderBrush="#596273"
+                     BorderThickness="1"
+                     TextChanged="SearchTextBox_TextChanged"/>
+
+                <TextBlock Text="Поиск..."
+                       Foreground="#9EA5B3"
+                       IsHitTestVisible="False"
+                       VerticalAlignment="Center"
+                       Margin="10,0,0,0"/>
+
+            </Grid>
+
+
+            <!-- Сортировка -->
+
+            <ComboBox x:Name="SortComboBox"
+                  Grid.Column="1"
+                  Width="180"
+                  Height="36"
+                  Margin="10,0,0,0"
+                  SelectionChanged="SortComboBox_SelectionChanged">
+
+                <ComboBoxItem Content="Имя ↑"
+                          Tag="NameAsc"/>
+
+                <ComboBoxItem Content="Имя ↓"
+                          Tag="NameDesc"/>
+
+                <ComboBoxItem Content="Package ↑"
+                          Tag="PackageAsc"/>
+
+                <ComboBoxItem Content="Package ↓"
+                          Tag="PackageDesc"/>
+
+            </ComboBox>
+
+
+            <!-- Выбрать все -->
+
+            <Button x:Name="SelectAllButton"
+                Grid.Column="2"
+                Content="Выбрать все"
+                Width="120"
+                Height="36"
+                Margin="10,0,0,0"
+                Click="SelectAllButton_Click"/>
+
+        </Grid>
+
+
+        <!-- ============================================== -->
+        <!-- СПИСОК ПРИЛОЖЕНИЙ -->
+        <!-- ============================================== -->
+
+        <ListView x:Name="ApplicationsList"
+              Grid.Row="1">
 
             <ListView.View>
 
                 <GridView>
 
+
+                    <!-- Чекбокс -->
+
                     <GridViewColumn Header=""
-                Width="40">
+                                Width="40">
+
                         <GridViewColumn.CellTemplate>
+
                             <DataTemplate>
+
                                 <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                      HorizontalAlignment="Center"/>
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+
                             </DataTemplate>
+
                         </GridViewColumn.CellTemplate>
+
                     </GridViewColumn>
 
+
+                    <!-- Название -->
+
                     <GridViewColumn Header="Название"
-                Width="220"
-                DisplayMemberBinding="{Binding Name}"/>
+                                Width="220"
+                                DisplayMemberBinding="{Binding Name}"/>
+
+
+                    <!-- Категория -->
 
                     <GridViewColumn Header="Категория"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Category}"/>
+                                Width="120"
+                                DisplayMemberBinding="{Binding Category}"/>
+
+
+                    <!-- Версия -->
 
                     <GridViewColumn Header="Версия"
-                                    Width="80"
-                                    DisplayMemberBinding="{Binding Version}"/>
+                                Width="80"
+                                DisplayMemberBinding="{Binding Version}"/>
+
+
+                    <!-- Package -->
+
+                    <GridViewColumn Header="Package"
+                                Width="280"
+                                DisplayMemberBinding="{Binding PackageName}"/>
 
                 </GridView>
 
             </ListView.View>
 
         </ListView>
-        
-        <Button x:Name="InstallButton"
-        Content="Установить выбранные приложения"
-        Width="280"
-        Height="40"
-        Margin="0,20,0,0"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Bottom"
-        Click="InstallButton_Click"/>
+
+
+        <!-- ============================================== -->
+        <!-- НИЖНЯЯ ПАНЕЛЬ -->
+        <!-- ============================================== -->
+
+        <Grid Grid.Row="2"
+          Margin="0,15,0,0">
+
+            <Button x:Name="InstallButton"
+                Content="Установить выбранные приложения"
+                Width="280"
+                Height="40"
+                HorizontalAlignment="Left"
+                Click="InstallButton_Click"/>
+
+        </Grid>
 
     </Grid>
 

@@ -366,7 +366,48 @@ namespace GeelyEasyToolkit.Services
                 return "Устройство не подключено.";
 
             return Execute(
-                $"shell monkey -p {packageName} -c android.intent.category.LAUNCHER 1");
+                $"shell monkey -p {packageName} " +
+                $"-c android.intent.category.LAUNCHER 1");
+        }
+
+        public bool IsSuccessfulLaunchResult(string result)
+        {
+            if (string.IsNullOrWhiteSpace(result))
+                return true;
+
+            string lower =
+                result.ToLowerInvariant();
+
+            if (lower.Contains("no activities found"))
+                return false;
+
+            if (lower.Contains("error"))
+                return false;
+
+            if (lower.Contains("exception"))
+                return false;
+
+            if (lower.Contains("unable to resolve"))
+                return false;
+
+            if (lower.Contains("securityexception"))
+                return false;
+
+            return true;
+        }
+             
+        
+        public string ExecuteShellCommand(string command)
+        {
+            if (string.IsNullOrWhiteSpace(command))
+                return "Команда не указана.";
+
+            return Execute($"shell {command}");
+        }
+
+        internal string InstallApplication(string fileName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

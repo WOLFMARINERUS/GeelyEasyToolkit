@@ -73,43 +73,43 @@
             <StackPanel Margin="15">
 
                 <Button x:Name="DashboardButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="🏠 Dashboard"
         Click="DashboardButton_Click"/>
 
                 <Button x:Name="ConnectionButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="🔌 Подключение"
         Click="ConnectionButton_Click"/>
 
                 <Button x:Name="ApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="📦 Приложения"
         Click="ApplicationsButton_Click"/>
 
                 <Button x:Name="ProfilesButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="🚗 Профили"/>
 
                 <Button x:Name="RepositoryButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="📁 Репозиторий"/>
                 
                 <Button x:Name="InstalledApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="📱 Установленные"
         Click="InstalledApplicationsButton_Click"/>
 
                 <Button x:Name="LogsButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="📄 Логи"/>
 
                 <Button x:Name="SettingsButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="⚙ Настройки"/>
 
                 <Button x:Name="DeveloperButton"
-        Style="{StaticResource NavigationButtonStyle}"
+        Style="{DynamicResource NavigationButtonStyle}"
         Content="🛠 Разработчик"/>
 
             </StackPanel>

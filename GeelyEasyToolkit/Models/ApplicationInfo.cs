@@ -1,6 +1,6 @@
 ﻿namespace GeelyEasyToolkit.Models
 {
-    
+
     public class ApplicationInfo
     {
         public string Name { get; set; } = "";
@@ -14,5 +14,9 @@
         public List<string> Compatible { get; set; } = new();
 
         public bool IsSelected { get; set; }
+
+        public string PackageName { get; set; } = "";
+
+        public List<AdbCommandInfo> AdbCommands { get; set; } = new();
     }
 }

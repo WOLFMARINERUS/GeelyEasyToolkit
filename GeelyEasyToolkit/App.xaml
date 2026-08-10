@@ -6,12 +6,79 @@
     <Application.Resources>
 
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="Themes/Colors.xaml"/>
-                <ResourceDictionary Source="Themes/Buttons.xaml"/>
+            <SolidColorBrush x:Key="AppBackgroundBrush"
+                             Color="#2F3440"/>
 
-            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="CardBackgroundBrush"
+                             Color="#3A4050"/>
+
+            <SolidColorBrush x:Key="PanelBackgroundBrush"
+                             Color="#252932"/>
+
+            <SolidColorBrush x:Key="PrimaryTextBrush"
+                             Color="White"/>
+
+            <SolidColorBrush x:Key="SecondaryTextBrush"
+                             Color="#C8CDD6"/>
+
+
+            <!-- Кнопки навигации -->
+
+            <Style x:Key="NavigationButtonStyle"
+                   TargetType="Button">
+
+                <Setter Property="Background"
+                        Value="#3A4050"/>
+
+                <Setter Property="Foreground"
+                        Value="White"/>
+
+                <Setter Property="BorderBrush"
+                        Value="#596273"/>
+
+                <Setter Property="BorderThickness"
+                        Value="1"/>
+
+                <Setter Property="Padding"
+                        Value="10,6"/>
+
+                <Setter Property="Margin"
+                        Value="4"/>
+
+
+                <Style.Triggers>
+
+                    <Trigger Property="IsMouseOver"
+                             Value="True">
+
+                        <Setter Property="Background"
+                                Value="#465166"/>
+
+                    </Trigger>
+
+
+                    <Trigger Property="IsPressed"
+                             Value="True">
+
+                        <Setter Property="Background"
+                                Value="#536783"/>
+
+                    </Trigger>
+
+
+                    <Trigger Property="IsEnabled"
+                             Value="False">
+
+                        <Setter Property="Opacity"
+                                Value="0.45"/>
+
+                    </Trigger>
+
+                </Style.Triggers>
+
+            </Style>
+
         </ResourceDictionary>
 
     </Application.Resources>
