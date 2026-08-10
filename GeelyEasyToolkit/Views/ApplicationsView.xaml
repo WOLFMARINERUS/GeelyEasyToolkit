@@ -3,170 +3,180 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Margin="20">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!-- ============================================== -->
         <!-- ПОИСК / СОРТИРОВКА / ВЫБОР ВСЕХ -->
         <!-- ============================================== -->
 
         <Grid Grid.Row="0"
-          Margin="0,0,0,15">
-
+              Margin="0,0,0,15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-
             <!-- Поиск -->
-
             <Grid Grid.Column="0">
-
                 <TextBox x:Name="SearchTextBox"
-                     Height="36"
-                     Padding="10,5"
-                     VerticalContentAlignment="Center"
-                     Background="#3A4050"
-                     Foreground="White"
-                     BorderBrush="#596273"
-                     BorderThickness="1"
-                     TextChanged="SearchTextBox_TextChanged"/>
+                         Height="36"
+                         Padding="10,5"
+                         VerticalContentAlignment="Center"
+                         Background="#3A4050"
+                         Foreground="White"
+                         BorderBrush="#596273"
+                         BorderThickness="1"
+                         TextChanged="SearchTextBox_TextChanged"/>
 
                 <TextBlock Text="Поиск..."
-                       Foreground="#9EA5B3"
-                       IsHitTestVisible="False"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0"/>
-
+                           Foreground="#9EA5B3"
+                           IsHitTestVisible="False"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
 
-
             <!-- Сортировка -->
-
             <ComboBox x:Name="SortComboBox"
-                  Grid.Column="1"
-                  Width="180"
-                  Height="36"
-                  Margin="10,0,0,0"
-                  SelectionChanged="SortComboBox_SelectionChanged">
-
-                <ComboBoxItem Content="Имя ↑"
-                          Tag="NameAsc"/>
-
-                <ComboBoxItem Content="Имя ↓"
-                          Tag="NameDesc"/>
-
-                <ComboBoxItem Content="Package ↑"
-                          Tag="PackageAsc"/>
-
-                <ComboBoxItem Content="Package ↓"
-                          Tag="PackageDesc"/>
-
+                      Grid.Column="1"
+                      Width="180"
+                      Height="36"
+                      Margin="10,0,0,0"
+                      SelectionChanged="SortComboBox_SelectionChanged">
+                <ComboBoxItem Content="Имя ↑" Tag="NameAsc"/>
+                <ComboBoxItem Content="Имя ↓" Tag="NameDesc"/>
+                <ComboBoxItem Content="Package ↑" Tag="PackageAsc"/>
+                <ComboBoxItem Content="Package ↓" Tag="PackageDesc"/>
             </ComboBox>
 
-
             <!-- Выбрать все -->
-
             <Button x:Name="SelectAllButton"
-                Grid.Column="2"
-                Content="Выбрать все"
-                Width="120"
-                Height="36"
-                Margin="10,0,0,0"
-                Click="SelectAllButton_Click"/>
-
+                    Grid.Column="2"
+                    Content="Выбрать все"
+                    Width="120"
+                    Height="36"
+                    Margin="10,0,0,0"
+                    Click="SelectAllButton_Click"/>
         </Grid>
-
 
         <!-- ============================================== -->
         <!-- СПИСОК ПРИЛОЖЕНИЙ -->
         <!-- ============================================== -->
 
         <ListView x:Name="ApplicationsList"
-              Grid.Row="1">
+                  Grid.Row="1"
+                  Background="#2F3440"
+                  BorderThickness="0"
+                  Foreground="White">
+
+            <ListView.Resources>
+                <!-- Стиль для элементов списка -->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="#2F3440"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="5,2"/>
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#3A4050"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#4A5A7A"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <!-- Стиль для заголовков колонок -->
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Background" Value="#3A4050"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="#596273"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    <Setter Property="Height" Value="35"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="Padding" Value="10,0"/>
+                </Style>
+            </ListView.Resources>
 
             <ListView.View>
-
                 <GridView>
-
-
                     <!-- Чекбокс -->
-
                     <GridViewColumn Header=""
-                                Width="40">
-
+                                    Width="40">
                         <GridViewColumn.CellTemplate>
-
                             <DataTemplate>
-
                                 <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"/>
-
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
                             </DataTemplate>
-
                         </GridViewColumn.CellTemplate>
-
                     </GridViewColumn>
 
-
                     <!-- Название -->
-
                     <GridViewColumn Header="Название"
-                                Width="220"
-                                DisplayMemberBinding="{Binding Name}"/>
-
+                                    Width="220"
+                                    DisplayMemberBinding="{Binding Name}"/>
 
                     <!-- Категория -->
-
                     <GridViewColumn Header="Категория"
-                                Width="120"
-                                DisplayMemberBinding="{Binding Category}"/>
-
+                                    Width="120"
+                                    DisplayMemberBinding="{Binding Category}"/>
 
                     <!-- Версия -->
-
                     <GridViewColumn Header="Версия"
-                                Width="80"
-                                DisplayMemberBinding="{Binding Version}"/>
-
+                                    Width="80"
+                                    DisplayMemberBinding="{Binding Version}"/>
 
                     <!-- Package -->
-
                     <GridViewColumn Header="Package"
-                                Width="280"
-                                DisplayMemberBinding="{Binding PackageName}"/>
-
+                                    Width="280"
+                                    DisplayMemberBinding="{Binding PackageName}"/>
                 </GridView>
-
             </ListView.View>
-
         </ListView>
-
 
         <!-- ============================================== -->
         <!-- НИЖНЯЯ ПАНЕЛЬ -->
         <!-- ============================================== -->
 
         <Grid Grid.Row="2"
-          Margin="0,15,0,0">
+              Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
             <Button x:Name="InstallButton"
-                Content="Установить выбранные приложения"
-                Width="280"
-                Height="40"
-                HorizontalAlignment="Left"
-                Click="InstallButton_Click"/>
+                    Grid.Column="0"
+                    Content="Установить выбранные приложения"
+                    Width="280"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    Click="InstallButton_Click"/>
 
+            <TextBlock x:Name="StatusText"
+                       Grid.Column="1"
+                       Text="Готово"
+                       Foreground="LightGray"
+                       VerticalAlignment="Center"
+                       Margin="25,0,0,0"/>
         </Grid>
 
     </Grid>
-
 </UserControl>

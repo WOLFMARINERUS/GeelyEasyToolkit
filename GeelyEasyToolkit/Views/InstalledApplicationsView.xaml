@@ -3,6 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -10,154 +14,143 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!-- Панель поиска и сортировки -->
-
         <Grid Grid.Row="0"
-              Margin="0,0,0,15">
-
+              Margin="0,0,0,15"
+              Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="23*"/>
-                <ColumnDefinition Width="583*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
+            <Grid Grid.Column="0">
+                <TextBox x:Name="SearchTextBox"
+                         Height="36"
+                         Padding="10,5"
+                         VerticalContentAlignment="Center"
+                         Background="#3A4050"
+                         Foreground="White"
+                         BorderBrush="#596273"
+                         BorderThickness="1"
+                         TextChanged="SearchTextBox_TextChanged"/>
 
-            <TextBox x:Name="SearchTextBox"
-                     Height="36"
-                     Padding="10,5"
-                     VerticalContentAlignment="Center"
-                     Background="#3A4050"
-                     Foreground="White"
-                     BorderBrush="#596273"
-                     BorderThickness="1"
-                     TextChanged="SearchTextBox_TextChanged" Grid.ColumnSpan="2"/>
-
-
-            <TextBlock Text="Поиск..."
-                       Foreground="#9EA5B3"
-                       IsHitTestVisible="False"
-                       VerticalAlignment="Center"
-                       Margin="10,0,0,0" Grid.ColumnSpan="2"/>
-
+                <TextBlock Text="Поиск..."
+                           Foreground="#9EA5B3"
+                           IsHitTestVisible="False"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"/>
+            </Grid>
 
             <ComboBox x:Name="SortComboBox"
-                      Grid.Column="2"
+                      Grid.Column="1"
                       Width="180"
                       Height="36"
                       Margin="10,0,0,0"
                       SelectionChanged="SortComboBox_SelectionChanged">
-
-                <ComboBoxItem Content="Имя ↑"
-                              Tag="NameAsc"/>
-
-                <ComboBoxItem Content="Имя ↓"
-                              Tag="NameDesc"/>
-
-                <ComboBoxItem Content="Package ↑"
-                              Tag="PackageAsc"/>
-
-                <ComboBoxItem Content="Package ↓"
-                              Tag="PackageDesc"/>
-
+                <ComboBoxItem Content="Имя ↑" Tag="NameAsc"/>
+                <ComboBoxItem Content="Имя ↓" Tag="NameDesc"/>
+                <ComboBoxItem Content="Package ↑" Tag="PackageAsc"/>
+                <ComboBoxItem Content="Package ↓" Tag="PackageDesc"/>
             </ComboBox>
 
-
-            <Button Grid.Column="3"
+            <Button Grid.Column="2"
                     x:Name="SelectAllButton"
                     Content="Выбрать все"
                     Width="120"
                     Height="36"
                     Margin="10,0,0,0"
                     Click="SelectAllButton_Click"/>
-
         </Grid>
 
-
-        <!-- Список -->
-
+        <!-- Список приложений -->
         <ListView x:Name="InstalledAppsList"
                   Grid.Row="1"
+                  Grid.ColumnSpan="2"
                   Background="#2F3440"
                   BorderThickness="0"
                   Foreground="White">
 
+            <ListView.Resources>
+                <!-- Стиль для элементов списка -->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="#2F3440"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="5,2"/>
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#3A4050"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#4A5A7A"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <!-- Стиль для заголовков колонок -->
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Background" Value="#3A4050"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="#596273"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,0"/>
+                    <Setter Property="Height" Value="35"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="Padding" Value="10,0"/>
+                </Style>
+            </ListView.Resources>
+
             <ListView.View>
-
                 <GridView>
-
-                    <GridViewColumn Header=""
-                                    Width="40">
-
+                    <GridViewColumn Header="" Width="40">
                         <GridViewColumn.CellTemplate>
-
                             <DataTemplate>
-
                                 <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
-          HorizontalAlignment="Center"
-          Click="ApplicationCheckBox_Click"/>
-
+                                          HorizontalAlignment="Center"/>
                             </DataTemplate>
-
                         </GridViewColumn.CellTemplate>
-
                     </GridViewColumn>
 
-
-                    <GridViewColumn Header="Название"
-                                    Width="250"
+                    <GridViewColumn Header="Название" 
+                                    Width="250" 
                                     DisplayMemberBinding="{Binding Name}"/>
 
-
-                    <GridViewColumn Header="Package"
-                                    Width="350"
+                    <GridViewColumn Header="Package" 
+                                    Width="350" 
                                     DisplayMemberBinding="{Binding PackageName}"/>
 
-
-                    <GridViewColumn Header="Версия"
-                                    Width="100"
+                    <GridViewColumn Header="Версия" 
+                                    Width="100" 
                                     DisplayMemberBinding="{Binding Version}"/>
 
-
-                    <GridViewColumn Header="Действия"
-                                    Width="180">
-
+                    <GridViewColumn Header="Действия" Width="180">
                         <GridViewColumn.CellTemplate>
-
                             <DataTemplate>
-
                                 <StackPanel Orientation="Horizontal">
-
                                     <Button Content="Запустить"
                                             Width="80"
                                             Height="30"
                                             Margin="0,0,5,0"
-                                            Click="Launch_Click"/>
+                                            Click="Launch_Click"
+                                            Tag="{Binding}"/>
 
                                     <Button Content="Удалить"
                                             Width="70"
                                             Height="30"
-                                            Click="UninstallItem_Click"/>
-
+                                            Click="UninstallItem_Click"
+                                            Tag="{Binding}"/>
                                 </StackPanel>
-
                             </DataTemplate>
-
                         </GridViewColumn.CellTemplate>
-
                     </GridViewColumn>
-
                 </GridView>
-
             </ListView.View>
-
         </ListView>
 
-
         <!-- Нижняя панель -->
-
         <StackPanel Grid.Row="2"
+                    Grid.ColumnSpan="2"
                     Orientation="Horizontal"
                     Margin="0,15,0,0">
 
@@ -167,22 +160,17 @@
                     Height="35"
                     Click="RefreshButton_Click"/>
 
-
             <TextBlock x:Name="StatusText"
                        Text="Готово"
                        Foreground="LightGray"
                        VerticalAlignment="Center"
                        Margin="25,0,40,0"/>
 
-
             <Button x:Name="DeleteSelectedButton"
                     Content="Удалить выбранные"
                     Width="150"
                     Height="35"
                     Click="UninstallSelected_Click"/>
-
         </StackPanel>
-
     </Grid>
-
 </UserControl>
