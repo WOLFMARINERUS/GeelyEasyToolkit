@@ -3,145 +3,270 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Grid Margin="30">
-        
+
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="Auto"/>
-
+            <!-- Основная область -->
             <RowDefinition Height="*"/>
 
+            <!-- Команды ADB -->
             <RowDefinition Height="Auto"/>
-
         </Grid.RowDefinitions>
 
-        <StackPanel>
 
-            <TextBlock Text="Подключение автомобиля"
+        <!-- ===================================================== -->
+        <!-- ОСНОВНАЯ ОБЛАСТЬ -->
+        <!-- ===================================================== -->
+
+        <Grid Grid.Row="0">
+
+            <Grid.RowDefinitions>
+
+                <!-- Заголовок -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Инструкция -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Данные подключения -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Кнопки -->
+                <RowDefinition Height="Auto"/>
+
+                <!-- Журнал -->
+                <RowDefinition Height="*"/>
+
+            </Grid.RowDefinitions>
+
+
+            <!-- ================================================= -->
+            <!-- ЗАГОЛОВОК -->
+            <!-- ================================================= -->
+
+            <StackPanel Grid.Row="0">
+
+                <TextBlock Text="Подключение автомобиля"
                        FontSize="30"
                        FontWeight="Bold"
                        Foreground="White"/>
 
-            <TextBlock Text="Следуйте шагам мастера подключения."
+                <TextBlock Text="Следуйте шагам мастера подключения."
                        Margin="0,10,0,25"
                        Foreground="LightGray"/>
 
-            <Border Background="#3A4050"
-                    CornerRadius="10"
-                    Padding="20">
+            </StackPanel>
+
+
+            <!-- ================================================= -->
+            <!-- ИНСТРУКЦИЯ -->
+            <!-- ================================================= -->
+
+            <Border Grid.Row="1"
+                Background="#3A4050"
+                CornerRadius="10"
+                Padding="20"
+                Margin="0,0,0,15">
 
                 <StackPanel>
 
                     <TextBlock Text="① Подключите автомобиль по USB"
-                               FontSize="18"
-                               Foreground="White"
-                               Margin="0,8"/>
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,5"/>
 
                     <TextBlock Text="② Включите зажигание"
-                               FontSize="18"
-                               Foreground="White"
-                               Margin="0,8"/>
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,5"/>
 
                     <TextBlock Text="③ Нажмите кнопку проверки"
-                               FontSize="18"
-                               Foreground="White"
-                               Margin="0,8"/>
-                    
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,5"/>
 
                 </StackPanel>
 
             </Border>
 
-            <Button x:Name="CheckConnectionButton"
-                    Content="Проверить подключение"
-                    Width="240"
-                    Height="45"
-                    Margin="0,25,0,0"
-                    HorizontalAlignment="Left"
-                    Click="CheckConnection_Click"/>
 
-            <TextBlock x:Name="StatusText"
-                       Text="Автомобиль не подключен."
-                       Margin="0,20,0,0"
-                       FontSize="16"
-                       Foreground="Orange"/>
-            <TextBlock x:Name="ModelText"
-           Text="Модель:"
-           Margin="0,10,0,0"
-           Foreground="White"/>
+            <!-- ================================================= -->
+            <!-- ИНФОРМАЦИЯ ОБ УСТРОЙСТВЕ -->
+            <!-- ================================================= -->
 
-            <TextBlock x:Name="ManufacturerText"
-           Text="Производитель:"
-           Foreground="White"/>
+            <Grid Grid.Row="2"
+              Margin="0,0,0,10">
 
-            <TextBlock x:Name="AndroidText"
-           Text="Android:"
-           Foreground="White"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="BuildText"
-           Text="Build:"
-           Foreground="White"/>
+                <StackPanel Grid.Column="0">
 
-            <TextBlock x:Name="FirmwareText"
-           Text="Прошивка:"
-           Foreground="White"/>
-            <Button Content="Диагностика ADB"
-        Width="240"
-        Height="45"
-        Margin="0,10,0,0"
-        Click="Diagnostics_Click"/>
-            
-            <TextBlock Text="Журнал диагностики"
-           Margin="0,20,0,10"
-           FontSize="18"
-           FontWeight="Bold"
-           Foreground="White"/>
+                    <Button x:Name="CheckConnectionButton"
+                        Content="Проверить подключение"
+                        Width="240"
+                        Height="45"
+                        HorizontalAlignment="Left"
+                        Click="CheckConnection_Click"/>
 
-            <TextBox x:Name="DiagnosticsOutput"
-         Background="#252932"
-         Foreground="#D8DEE9"
-         BorderBrush="#596273"
-         BorderThickness="1"
-         IsReadOnly="True"
-         AcceptsReturn="True"
-         TextWrapping="NoWrap"
-         VerticalScrollBarVisibility="Auto"
-         HorizontalScrollBarVisibility="Auto"
-         VerticalAlignment="Stretch"
-         HorizontalAlignment="Stretch"/>
+                    <Button Content="Диагностика ADB"
+                        Width="240"
+                        Height="45"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        Click="Diagnostics_Click"/>
 
-        </StackPanel>
+                </StackPanel>
 
-        <Border Grid.Row="2"
-        Background="#3A4050"
-        Padding="10"
-        Margin="0,10,0,0">
+
+                <StackPanel Grid.Column="1"
+                        Margin="25,0,0,0"
+                        VerticalAlignment="Center">
+
+                    <TextBlock x:Name="StatusText"
+                           Text="Автомобиль не подключен."
+                           FontSize="16"
+                           Foreground="Orange"/>
+
+                    <TextBlock x:Name="ModelText"
+                           Text="Модель:"
+                           Margin="0,5,0,0"
+                           Foreground="White"/>
+
+                    <TextBlock x:Name="ManufacturerText"
+                           Text="Производитель:"
+                           Foreground="White"/>
+
+                    <TextBlock x:Name="AndroidText"
+                           Text="Android:"
+                           Foreground="White"/>
+
+                    <TextBlock x:Name="BuildText"
+                           Text="Build:"
+                           Foreground="White"/>
+
+                    <TextBlock x:Name="FirmwareText"
+                           Text="Прошивка:"
+                           Foreground="White"/>
+
+                </StackPanel>
+
+            </Grid>
+
+
+            <!-- ================================================= -->
+            <!-- ЖУРНАЛ -->
+            <!-- ================================================= -->
+
+            <Grid Grid.Row="4">
+
+                <Grid.RowDefinitions>
+
+                    <!-- Заголовок журнала -->
+                    <RowDefinition Height="Auto"/>
+
+                    <!-- Сам журнал -->
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+
+
+                <TextBlock Grid.Row="0"
+                       Text="Журнал диагностики"
+                       Margin="0,5,0,8"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+
+                <TextBox Grid.Row="1"
+                     x:Name="DiagnosticsOutput"
+                     Background="#252932"
+                     Foreground="#D8DEE9"
+                     BorderBrush="#596273"
+                     BorderThickness="1"
+                     IsReadOnly="True"
+                     AcceptsReturn="True"
+                     TextWrapping="NoWrap"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalAlignment="Stretch"
+                     HorizontalAlignment="Stretch"/>
+
+            </Grid>
+
+        </Grid>
+
+
+        <!-- ===================================================== -->
+        <!-- ADB КОМАНДЫ -->
+        <!-- ===================================================== -->
+
+        <Border Grid.Row="1"
+            Background="#3A4050"
+            Padding="12"
+            Margin="0,12,0,0">
 
             <Grid>
 
-                <Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
 
-                    <ColumnDefinition Width="*"/>
+                    <!-- Предупреждение -->
+                    <RowDefinition Height="Auto"/>
 
-                    <ColumnDefinition Width="Auto"/>
+                    <!-- Поле + кнопка -->
+                    <RowDefinition Height="Auto"/>
 
-                </Grid.ColumnDefinitions>
-
-
-                <TextBox x:Name="AdbCommandTextBox"
-                 Height="36"
-                 Padding="10"
-                 VerticalContentAlignment="Center"
-                 Background="#252932"
-                 Foreground="White"
-                 BorderBrush="#596273"/>
+                </Grid.RowDefinitions>
 
 
-                <Button Grid.Column="1"
-                Content="Выполнить"
-                Width="110"
-                Height="36"
-                Margin="10,0,0,0"
-                Click="ExecuteAdbCommand_Click"/>
+                <!-- ================================================= -->
+                <!-- ПРЕДУПРЕЖДЕНИЕ -->
+                <!-- ================================================= -->
+
+                <TextBlock Grid.Row="0"
+                       Text="⚠ Не вводите «adb shell». Программа добавляет adb shell автоматически."
+                       Foreground="#FFCC66"
+                       FontSize="13"
+                       Margin="0,0,0,8"
+                       TextWrapping="Wrap"/>
+
+
+                <!-- ================================================= -->
+                <!-- ВВОД КОМАНДЫ -->
+                <!-- ================================================= -->
+
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="*"/>
+
+                        <ColumnDefinition Width="Auto"/>
+
+                    </Grid.ColumnDefinitions>
+
+
+                    <TextBox x:Name="AdbCommandTextBox"
+                         Grid.Column="0"
+                         Height="36"
+                         Padding="10"
+                         VerticalContentAlignment="Center"
+                         Background="#252932"
+                         Foreground="White"
+                         BorderBrush="#596273"
+                         BorderThickness="1"/>
+
+
+                    <Button Grid.Column="1"
+                        Content="Выполнить"
+                        Width="110"
+                        Height="36"
+                        Margin="10,0,0,0"
+                        Click="ExecuteAdbCommand_Click"/>
+
+                </Grid>
 
             </Grid>
 
