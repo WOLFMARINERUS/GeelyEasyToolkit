@@ -2,53 +2,186 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="NavigationButtonStyle" TargetType="Button">
 
-        <Setter Property="Height" Value="45"/>
-        <Setter Property="Margin" Value="0,5"/>
-        <Setter Property="Foreground"
-        Value="{StaticResource PrimaryTextBrush}"/>
+    <!-- Основная кнопка программы -->
+
+    <Style x:Key="ModernButtonStyle"
+           TargetType="Button">
+
+
         <Setter Property="Background"
-        Value="{StaticResource CardBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="Cursor" Value="Hand"/>
+                Value="#3A4050"/>
+
+        <Setter Property="Foreground"
+                Value="White"/>
+
+
+        <Setter Property="BorderBrush"
+                Value="#596273"/>
+
+
+        <Setter Property="BorderThickness"
+                Value="1"/>
+
+
+        <Setter Property="Padding"
+                Value="16,8"/>
+
+
+        <Setter Property="FontSize"
+                Value="14"/>
+
+
+        <Setter Property="FontWeight"
+                Value="SemiBold"/>
+
+
+        <Setter Property="Cursor"
+                Value="Hand"/>
+
 
         <Setter Property="Template">
+
+
             <Setter.Value>
+
                 <ControlTemplate TargetType="Button">
 
-                    <Border x:Name="Border"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="8">
+
+                    <Border x:Name="border"
+
+        Background="{TemplateBinding Background}"
+
+        BorderBrush="{TemplateBinding BorderBrush}"
+
+        BorderThickness="{TemplateBinding BorderThickness}"
+
+        CornerRadius="10">
+
+
+                        <Border.RenderTransform>
+
+                            <ScaleTransform ScaleX="1"
+                        ScaleY="1"/>
+
+                        </Border.RenderTransform>
+
 
                         <ContentPresenter
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+
+        HorizontalAlignment="Center"
+
+        VerticalAlignment="Center"/>
+
 
                     </Border>
 
+
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="#00B4D8"/>
+
+                        <!-- Наведение -->
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+
+
+                            <Setter TargetName="border"
+        Property="Background"
+        Value="#526078"/>
+
+
+                            <Setter TargetName="border"
+        Property="BorderBrush"
+        Value="#8FA4C7"/>
+
+
                         </Trigger>
 
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="#0096C7"/>
+
+
+                        <!-- Нажатие -->
+
+                        <Trigger Property="IsPressed"
+         Value="True">
+
+
+                            <Setter TargetName="border"
+            Property="Background"
+            Value="#252A36"/>
+
+
+                            <Setter TargetName="border"
+            Property="Opacity"
+            Value="0.85"/>
+
+
                         </Trigger>
+
+
+
+                        <!-- Отключено -->
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+
+
+                            <Setter TargetName="border"
+                                    Property="Opacity"
+                                    Value="0.45"/>
+
+
+                        </Trigger>
+
 
                     </ControlTemplate.Triggers>
 
+
                 </ControlTemplate>
+
             </Setter.Value>
+
+
         </Setter>
 
+
     </Style>
+
+
+
+    <!-- Главная кнопка действия -->
+
+    <Style x:Key="AccentButtonStyle"
+           TargetType="Button"
+           BasedOn="{StaticResource ModernButtonStyle}">
+
+
+        <Setter Property="Background"
+                Value="#4F7CFF"/>
+
+
+        <Setter Property="BorderBrush"
+                Value="#6F95FF"/>
+
+
+        <Style.Triggers>
+
+
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+
+
+                <Setter Property="Background"
+                        Value="#658CFF"/>
+
+
+            </Trigger>
+
+
+        </Style.Triggers>
+
+
+    </Style>
+
 
 </ResourceDictionary>

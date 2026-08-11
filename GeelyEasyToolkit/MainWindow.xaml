@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:GeelyEasyToolkit.Views"
         Title="Geely Easy Toolkit"
-        Height="800"
+        Height="1000"
         Width="1400"
-        MinHeight="700"
+        MinHeight="900"
         MinWidth="1200"
         WindowStartupLocation="CenterScreen"
         Background="#1C1F26">
-
+        
     <Grid>
 
         <Grid.RowDefinitions>
@@ -19,13 +19,16 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="46.5"/>
+            <ColumnDefinition Width="33.5"/>
+            <ColumnDefinition Width="261*"/>
+            <ColumnDefinition Width="880*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Верхняя панель -->
         <Border Grid.Row="0"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="5"
                 Background="#252932">
 
             <Grid Margin="20,0">
@@ -68,7 +71,7 @@
 
         <!-- Левое меню -->
         <Border Grid.Row="1"
-                Background="#252932">
+                Background="#252932" Grid.ColumnSpan="3">
 
             <StackPanel Margin="15">
 
@@ -94,7 +97,7 @@
                 <Button x:Name="RepositoryButton"
         Style="{StaticResource NavigationButtonStyle}"
         Content="📁 Репозиторий"/>
-                
+
                 <Button x:Name="InstalledApplicationsButton"
         Style="{StaticResource NavigationButtonStyle}"
         Content="📱 Установленные"
@@ -118,19 +121,19 @@
 
         <!-- Рабочая область -->
         <Border Grid.Row="1"
-                Grid.Column="1"
-                Margin="20"
-                CornerRadius="10"
-                Background="#2F3440">
+        Grid.Column="3"
+        Margin="20,20,20,20"
+        CornerRadius="10"
+        Background="#2F3440" Grid.ColumnSpan="2">
 
             <ContentControl x:Name="MainContent"/>
 
         </Border>
 
         <!-- Нижняя строка -->
-        <Border Grid.Row="2"
-                Grid.ColumnSpan="2"
-                Background="#252932">
+        <Border Grid.Row="1"
+                Grid.ColumnSpan="5"
+                Background="#252932" Margin="0,894,0,0" Grid.RowSpan="2">
 
             <Grid Margin="15,0">
 

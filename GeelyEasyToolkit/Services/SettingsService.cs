@@ -17,5 +17,15 @@ namespace GeelyEasyToolkit.Services
         /// Папка с APK
         /// </summary>
         public string ApkFolder { get; set; } = "";
+
+        public double WindowWidth { get; set; } = 1400;
+
+        public double WindowHeight { get; set; } = 1000;
+
+        public double WindowLeft { get; set; } = -1;
+
+        public double WindowTop { get; set; } = -1;
+
+        public bool WindowMaximized { get; set; } = false;
     }
 }

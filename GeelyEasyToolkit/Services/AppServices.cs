@@ -14,6 +14,9 @@
 
         public static AdbService Adb { get; } = new AdbService();
 
+        public static AdbActivationService AdbActivation { get; }
+    = new AdbActivationService();
+
         public static DeviceMonitorService DeviceMonitor { get; } = new DeviceMonitorService();
 
         public static ApplicationCacheService ApplicationCache { get; } =

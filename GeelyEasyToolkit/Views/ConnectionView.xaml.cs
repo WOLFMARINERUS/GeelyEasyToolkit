@@ -132,5 +132,51 @@ namespace GeelyEasyToolkit.Views
 
             DiagnosticsOutput.ScrollToEnd();
         }
+        private async void ActivateAdb_Click(
+    object sender,
+    RoutedEventArgs e)
+        {
+
+            DiagnosticsOutput.Clear();
+
+
+            DiagnosticsOutput.AppendText(
+                "Запуск мастера активации ADB...\n\n");
+
+
+            AppServices.AdbActivation.Log +=
+                text =>
+                Dispatcher.Invoke(() =>
+                {
+                    DiagnosticsOutput.AppendText(
+                        text + Environment.NewLine);
+
+                    DiagnosticsOutput.ScrollToEnd();
+                });
+
+
+
+            bool result =
+                await AppServices.AdbActivation.Activate();
+
+
+
+            DiagnosticsOutput.AppendText(
+                Environment.NewLine);
+
+
+
+            if (result)
+            {
+                DiagnosticsOutput.AppendText(
+                    "Процесс подготовки завершён.\n");
+            }
+            else
+            {
+                DiagnosticsOutput.AppendText(
+                    "Процесс завершился с ошибкой.\n");
+            }
+
+        }
     }
 }

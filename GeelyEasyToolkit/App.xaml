@@ -26,56 +26,136 @@
             <!-- Кнопки навигации -->
 
             <Style x:Key="NavigationButtonStyle"
-                   TargetType="Button">
+       TargetType="Button">
+
 
                 <Setter Property="Background"
-                        Value="#3A4050"/>
+            Value="#3A4050"/>
+
 
                 <Setter Property="Foreground"
-                        Value="White"/>
+            Value="White"/>
+
 
                 <Setter Property="BorderBrush"
-                        Value="#596273"/>
+            Value="#596273"/>
+
 
                 <Setter Property="BorderThickness"
-                        Value="1"/>
+            Value="0"/>
+
 
                 <Setter Property="Padding"
-                        Value="10,6"/>
+            Value="14,10"/>
+
 
                 <Setter Property="Margin"
-                        Value="4"/>
+            Value="0,5,0,5"/>
 
 
-                <Style.Triggers>
+                <Setter Property="Height"
+            Value="42"/>
 
-                    <Trigger Property="IsMouseOver"
+
+                <Setter Property="FontSize"
+            Value="15"/>
+
+
+                <Setter Property="FontWeight"
+            Value="SemiBold"/>
+
+
+                <Setter Property="HorizontalContentAlignment"
+            Value="Left"/>
+
+
+                <Setter Property="Cursor"
+            Value="Hand"/>
+
+
+                <Setter Property="Template">
+
+
+                    <Setter.Value>
+
+
+                        <ControlTemplate TargetType="Button">
+
+
+                            <Border x:Name="NavBorder"
+
+                        Background="{TemplateBinding Background}"
+
+                        CornerRadius="8">
+
+
+                                <ContentPresenter
+
+                        Margin="10,0,0,0"
+
+                        VerticalAlignment="Center"/>
+
+
+                            </Border>
+
+
+                            <ControlTemplate.Triggers>
+
+
+                                <!-- Наведение -->
+
+                                <Trigger Property="IsMouseOver"
                              Value="True">
 
-                        <Setter Property="Background"
+
+                                    <Setter TargetName="NavBorder"
+                                Property="Background"
                                 Value="#465166"/>
 
-                    </Trigger>
+
+                                </Trigger>
 
 
-                    <Trigger Property="IsPressed"
+
+                                <!-- Нажатие -->
+
+                                <Trigger Property="IsPressed"
                              Value="True">
 
-                        <Setter Property="Background"
+
+                                    <Setter TargetName="NavBorder"
+                                Property="Background"
                                 Value="#536783"/>
 
-                    </Trigger>
+
+                                </Trigger>
 
 
-                    <Trigger Property="IsEnabled"
+                                <!-- Отключение -->
+
+                                <Trigger Property="IsEnabled"
                              Value="False">
 
-                        <Setter Property="Opacity"
+
+                                    <Setter TargetName="NavBorder"
+                                Property="Opacity"
                                 Value="0.45"/>
 
-                    </Trigger>
 
-                </Style.Triggers>
+                                </Trigger>
+
+
+                            </ControlTemplate.Triggers>
+
+
+                        </ControlTemplate>
+
+
+                    </Setter.Value>
+
+
+                </Setter>
+
 
             </Style>
 

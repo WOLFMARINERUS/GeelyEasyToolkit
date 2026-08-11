@@ -1,8 +1,10 @@
 ﻿using GeelyEasyToolkit.Services;
 using GeelyEasyToolkit.Views;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Interop;
 
 namespace GeelyEasyToolkit
 {
@@ -15,6 +17,9 @@ namespace GeelyEasyToolkit
         public MainWindow()
         {
             InitializeComponent();
+            var windowHandle = new WindowInteropHelper(this).Handle;
+
+            LoadWindowSettings();
 
             AppServices.Navigation.Initialize(MainContent);
             AppServices.Navigation.Register("Dashboard", _dashboardView);
@@ -27,6 +32,50 @@ namespace GeelyEasyToolkit
             AppServices.Navigation.Navigate("Dashboard");
 
             HighlightButton(DashboardButton);
+        }
+
+        private void LoadWindowSettings()
+        {
+            var settings = AppServices.Settings;
+
+
+            Width = settings.WindowWidth;
+
+            Height = settings.WindowHeight;
+
+
+            if (settings.WindowLeft >= 0)
+                Left = settings.WindowLeft;
+
+
+            if (settings.WindowTop >= 0)
+                Top = settings.WindowTop;
+
+
+            if (settings.WindowMaximized)
+                WindowState = WindowState.Maximized;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            var settings = AppServices.Settings;
+
+
+            if (WindowState == WindowState.Normal)
+            {
+                settings.WindowWidth = Width;
+                settings.WindowHeight = Height;
+
+                settings.WindowLeft = Left;
+                settings.WindowTop = Top;
+            }
+
+
+            settings.WindowMaximized =
+                WindowState == WindowState.Maximized;
+
+
+            base.OnClosed(e);
         }
 
         private void DashboardButton_Click(object sender, RoutedEventArgs e)
@@ -61,16 +110,17 @@ namespace GeelyEasyToolkit
             System.Windows.Media.Brush selectedText = System.Windows.Media.Brushes.Black;
 
             System.Windows.Controls.Button[] buttons =
-            {
-        DashboardButton,
-        ConnectionButton,
-        ApplicationsButton,
-        ProfilesButton,
-        RepositoryButton,
-        LogsButton,
-        SettingsButton,
-        DeveloperButton
-    };
+{
+    DashboardButton,
+    ConnectionButton,
+    ApplicationsButton,
+    ProfilesButton,
+    RepositoryButton,
+    InstalledApplicationsButton,
+    LogsButton,
+    SettingsButton,
+    DeveloperButton
+};
 
             foreach (var button in buttons)
             {

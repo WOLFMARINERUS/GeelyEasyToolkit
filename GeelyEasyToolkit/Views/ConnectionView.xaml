@@ -116,7 +116,11 @@
                         Margin="0,10,0,0"
                         HorizontalAlignment="Left"
                         Click="Diagnostics_Click"/>
-
+                    <Button Content="Активировать ADB"
+        Width="240"
+        Height="45"
+        Margin="0,10,0,0"
+        Click="ActivateAdb_Click"/>
                 </StackPanel>
 
 
