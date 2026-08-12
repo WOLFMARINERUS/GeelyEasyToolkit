@@ -92,7 +92,8 @@
 
                 <Button x:Name="ProfilesButton"
         Style="{StaticResource NavigationButtonStyle}"
-        Content="🚗 Профили"/>
+        Content="🚗 Профили"
+        Click="ProfilesButton_Click"/>
 
                 <Button x:Name="RepositoryButton"
         Style="{StaticResource NavigationButtonStyle}"

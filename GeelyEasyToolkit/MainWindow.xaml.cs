@@ -15,6 +15,8 @@ namespace GeelyEasyToolkit
         private readonly ApplicationsView _applicationsView = new();
         private readonly InstalledApplicationsView _installedApplicationsView = new();
         private readonly RepositoryView _repositoryView = new();
+        private readonly ProfilesView _profilesView = new();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +34,7 @@ namespace GeelyEasyToolkit
             UpdateConnectionStatus(AppServices.DeviceMonitor.IsConnected);
             AppServices.Navigation.Navigate("Dashboard");
             AppServices.Navigation.Register("Repository", _repositoryView);
+            AppServices.Navigation.Register("Profiles", _profilesView);
             HighlightButton(DashboardButton);
         }
 
@@ -103,6 +106,12 @@ namespace GeelyEasyToolkit
         {
             AppServices.Navigation.Navigate("Applications");
             HighlightButton(ApplicationsButton);
+        }
+
+        private void ProfilesButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppServices.Navigation.Navigate("Profiles");
+            HighlightButton(ProfilesButton);
         }
 
         private void RepositoryButton_Click(object sender, RoutedEventArgs e)
