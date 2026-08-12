@@ -96,7 +96,8 @@
 
                 <Button x:Name="RepositoryButton"
         Style="{StaticResource NavigationButtonStyle}"
-        Content="📁 Репозиторий"/>
+        Content="📁 Репозиторий"
+        Click="RepositoryButton_Click"/>
 
                 <Button x:Name="InstalledApplicationsButton"
         Style="{StaticResource NavigationButtonStyle}"

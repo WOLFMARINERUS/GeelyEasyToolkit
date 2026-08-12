@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using GeelyEasyToolkit.Models;
+using System.Text.Json.Serialization;
 
 namespace GeelyEasyToolkit.Services
 {
@@ -21,6 +22,46 @@ namespace GeelyEasyToolkit.Services
                 JsonSerializer.Deserialize<RepositoryModel>(json);
 
             return Repository != null;
+        }
+
+        public bool SaveRepository(string path)
+        {
+            if (Repository == null)
+                return false;
+
+            try
+            {
+                string? directory =
+                    Path.GetDirectoryName(path);
+
+                if (!string.IsNullOrWhiteSpace(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                JsonSerializerOptions options =
+                    new JsonSerializerOptions
+                    {
+                        WriteIndented = true,
+                        DefaultIgnoreCondition =
+                            JsonIgnoreCondition.Never
+                    };
+
+                string json =
+                    JsonSerializer.Serialize(
+                        Repository,
+                        options);
+
+                File.WriteAllText(
+                    path,
+                    json);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public string GetApplicationPath(ApplicationInfo app)

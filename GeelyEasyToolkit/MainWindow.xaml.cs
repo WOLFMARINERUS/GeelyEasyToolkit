@@ -14,6 +14,7 @@ namespace GeelyEasyToolkit
         private readonly ConnectionView _connectionView = new();
         private readonly ApplicationsView _applicationsView = new();
         private readonly InstalledApplicationsView _installedApplicationsView = new();
+        private readonly RepositoryView _repositoryView = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace GeelyEasyToolkit
             AppServices.DeviceMonitor.ConnectionChanged += DeviceMonitor_ConnectionChanged;
             UpdateConnectionStatus(AppServices.DeviceMonitor.IsConnected);
             AppServices.Navigation.Navigate("Dashboard");
-
+            AppServices.Navigation.Register("Repository", _repositoryView);
             HighlightButton(DashboardButton);
         }
 
@@ -103,6 +104,13 @@ namespace GeelyEasyToolkit
             AppServices.Navigation.Navigate("Applications");
             HighlightButton(ApplicationsButton);
         }
+
+        private void RepositoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppServices.Navigation.Navigate("Repository");
+            HighlightButton(RepositoryButton);
+        }
+
         private void HighlightButton(System.Windows.Controls.Button activeButton)
         {
             System.Windows.Media.Brush normal = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#3A4050"));
