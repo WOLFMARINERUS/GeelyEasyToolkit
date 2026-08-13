@@ -36,5 +36,9 @@
         /// Требуется ли режим разработчика
         /// </summary>
         public bool RequiresDeveloperMode { get; set; }
+
+        public bool IsBuiltIn { get; set; }
+
     }
+
 }

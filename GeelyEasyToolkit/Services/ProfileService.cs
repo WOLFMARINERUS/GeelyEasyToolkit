@@ -9,113 +9,177 @@ namespace GeelyEasyToolkit.Services
 {
     public class ProfileService
     {
+        private readonly ILogger<ProfileService>? _logger;
+
         public VehicleProfile? CurrentProfile { get; private set; }
 
-        public List<VehicleProfile> Profiles { get; private set; }
-            = new();
+        public List<VehicleProfile> Profiles { get; private set; } = new();
 
+        public ProfileService(ILogger<ProfileService>? logger = null)
+        {
+            _logger = logger;
+        }
+
+        public VehicleProfile? GetCurrentProfile() => CurrentProfile;
 
         private string ProfilesFolder =>
             Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 "Profiles");
 
-
         public void LoadProfiles()
         {
             Profiles.Clear();
 
-            Directory.CreateDirectory(
-                ProfilesFolder);
+            Directory.CreateDirectory(ProfilesFolder);
 
-            string[] files =
-                Directory.GetFiles(
-                    ProfilesFolder,
-                    "*.json");
+            string[] files = Directory.GetFiles(ProfilesFolder, "*.json");
 
             foreach (string file in files)
             {
                 try
                 {
-                    string json =
-                        File.ReadAllText(file);
+                    string json = File.ReadAllText(file);
 
-                    VehicleProfile? profile =
-                        JsonSerializer.Deserialize<VehicleProfile>(
-                            json,
-                            new JsonSerializerOptions
-                            {
-                                PropertyNameCaseInsensitive = true
-                            });
+                    VehicleProfile? profile = JsonSerializer.Deserialize<VehicleProfile>(
+                        json,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                    if (profile == null)
-                        continue;
-
-                    if (string.IsNullOrWhiteSpace(profile.Name))
+                    if (profile == null || string.IsNullOrWhiteSpace(profile.Name))
                         continue;
 
                     Profiles.Add(profile);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Повреждённый профиль
-                    // не должен ломать загрузку остальных.
+                    _logger?.LogWarning($"Ошибка загрузки профиля из {file}: {ex.Message}");
                 }
             }
 
-            Profiles =
-                Profiles
-                    .OrderBy(
-                        p => p.Name,
-                        StringComparer.CurrentCultureIgnoreCase)
-                    .ToList();
+            // Сортируем без перезаписи свойства
+            var sorted = Profiles
+                .OrderBy(p => p.Name, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+
+            Profiles.Clear();
+            Profiles.AddRange(sorted);
         }
 
+        public bool SaveProfile(VehicleProfile profile)
+        {
+            try
+            {
+                if (profile == null || string.IsNullOrWhiteSpace(profile.Name))
+                    return false;
 
-        public void LoadProfile(
-            VehicleProfile profile)
+                Directory.CreateDirectory(ProfilesFolder);
+
+                string safeName = string.Join(
+                    "_",
+                    profile.Name.Split(Path.GetInvalidFileNameChars()));
+
+                string path = Path.Combine(ProfilesFolder, $"{safeName}.json");
+
+                string json = JsonSerializer.Serialize(
+                    profile,
+                    new JsonSerializerOptions { WriteIndented = true });
+
+                File.WriteAllText(path, json);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Ошибка сохранения профиля: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool DeleteProfile(VehicleProfile profile)
+        {
+            try
+            {
+                if (profile == null || string.IsNullOrWhiteSpace(profile.Name))
+                    return false;
+
+                string[] files = Directory.GetFiles(ProfilesFolder, "*.json");
+
+                foreach (string file in files)
+                {
+                    try
+                    {
+                        string json = File.ReadAllText(file);
+
+                        VehicleProfile? existing = JsonSerializer.Deserialize<VehicleProfile>(
+                            json,
+                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                        if (existing == null)
+                            continue;
+
+                        if (!string.Equals(
+                                existing.Name,
+                                profile.Name,
+                                StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        File.Delete(file);
+
+                        // Исправленное сравнение по имени
+                        if (CurrentProfile != null &&
+                            string.Equals(CurrentProfile.Name, profile.Name, StringComparison.OrdinalIgnoreCase))
+                        {
+                            CurrentProfile = null;
+                        }
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogWarning($"Ошибка чтения {file}: {ex.Message}");
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"Ошибка удаления профиля: {ex.Message}");
+                return false;
+            }
+        }
+
+        public void LoadProfile(VehicleProfile profile)
         {
             CurrentProfile = profile;
         }
 
-
-        public VehicleProfile? DetectProfile(
-            DeviceInfo info)
+        public VehicleProfile? DetectProfile(DeviceInfo info)
         {
-            string model =
-                info.Model?.ToLowerInvariant() ?? "";
+            if (info == null)
+                return null;
 
-            if (model.Contains("cityray") ||
-                model.Contains("fy11"))
+            string model = info.Model?.ToLowerInvariant() ?? "";
+            string profileName = model switch
             {
-                return new VehicleProfile
+                var m when m.Contains("cityray") || m.Contains("fy11") => "Cityray",
+                var m when m.Contains("atlas") => "Atlas",
+                var m when m.Contains("preface") => "Preface",
+                _ => null
+            };
+
+            if (string.IsNullOrEmpty(profileName))
+                return null;
+
+            // Ищем существующий профиль
+            return Profiles.FirstOrDefault(p =>
+                string.Equals(p.Name, profileName, StringComparison.OrdinalIgnoreCase))
+                ?? new VehicleProfile
                 {
-                    Name = "Cityray",
+                    Name = profileName,
                     Manufacturer = "Geely",
-                    SupportsWirelessAdb = false,
+                    SupportsWirelessAdb = profileName == "Cityray" ? false : true,
                     RequiresDeveloperMode = true
                 };
-            }
-
-            if (model.Contains("atlas"))
-            {
-                return new VehicleProfile
-                {
-                    Name = "Atlas",
-                    Manufacturer = "Geely"
-                };
-            }
-
-            if (model.Contains("preface"))
-            {
-                return new VehicleProfile
-                {
-                    Name = "Preface",
-                    Manufacturer = "Geely"
-                };
-            }
-
-            return null;
         }
     }
 }

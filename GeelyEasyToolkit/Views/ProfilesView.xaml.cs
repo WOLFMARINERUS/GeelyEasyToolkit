@@ -144,6 +144,7 @@ namespace GeelyEasyToolkit.Views
         private void UseProfileButton_Click(
             object sender,
             RoutedEventArgs e)
+
         {
             if (ProfilesList.SelectedItem
                 is not VehicleProfile profile)
@@ -163,6 +164,11 @@ namespace GeelyEasyToolkit.Views
 
             StatusText.Text =
                 $"Текущий профиль: {profile.Name}";
+            System.Windows.MessageBox.Show(
+    $"Выбран профиль:\n\n{profile.Name}",
+    "Профиль автомобиля",
+    MessageBoxButton.OK,
+    MessageBoxImage.Information);
         }
 
 
@@ -170,6 +176,154 @@ namespace GeelyEasyToolkit.Views
             object sender,
             RoutedEventArgs e)
         {
+            LoadProfiles();
+        }
+
+        private void AddProfileButton_Click(
+    object sender,
+    RoutedEventArgs e)
+        {
+            ProfileEditorWindow window =
+                new ProfileEditorWindow();
+
+            window.Owner =
+                Window.GetWindow(this);
+
+            if (window.ShowDialog() != true)
+                return;
+
+            if (AppServices.Profiles.Profiles.Any(
+                p => string.Equals(
+                    p.Name,
+                    window.Profile.Name,
+                    StringComparison.OrdinalIgnoreCase)))
+            {
+                System.Windows.MessageBox.Show(
+                    "Профиль с таким названием уже существует.",
+                    "Профиль",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Warning);
+
+                return;
+            }
+
+            if (!AppServices.Profiles.SaveProfile(
+                    window.Profile))
+            {
+                System.Windows.MessageBox.Show(
+                    "Не удалось сохранить профиль.",
+                    "Ошибка",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
+
+                return;
+            }
+
+            LoadProfiles();
+
+            ProfilesList.SelectedItem =
+                AppServices.Profiles.Profiles
+                    .FirstOrDefault(
+                        p => p.Name == window.Profile.Name);
+        }
+
+
+        private void EditProfileButton_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            if (ProfilesList.SelectedItem
+                is not VehicleProfile profile)
+            {
+                System.Windows.MessageBox.Show(
+                    "Сначала выберите профиль.",
+                    "Профили",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+
+                return;
+            }
+
+            ProfileEditorWindow window =
+                new ProfileEditorWindow(profile);
+
+            window.Owner =
+                Window.GetWindow(this);
+
+            if (window.ShowDialog() != true)
+                return;
+
+            if (!AppServices.Profiles.SaveProfile(
+                    window.Profile))
+            {
+                System.Windows.MessageBox.Show(
+                    "Не удалось сохранить профиль.",
+                    "Ошибка",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
+
+                return;
+            }
+
+            LoadProfiles();
+
+            ProfilesList.SelectedItem =
+                AppServices.Profiles.Profiles
+                    .FirstOrDefault(
+                        p => p.Name == window.Profile.Name);
+        }
+
+
+        private void DeleteProfileButton_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            if (ProfilesList.SelectedItem
+                is not VehicleProfile profile)
+            {
+                System.Windows.MessageBox.Show(
+                    "Сначала выберите профиль.",
+                    "Профили",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+
+                return;
+            }
+
+            System.Windows.MessageBoxResult result =
+                System.Windows.MessageBox.Show(
+                    $"Удалить профиль \"{profile.Name}\"?\n\n" +
+                    "Файл профиля также будет удалён.",
+                    "Удаление профиля",
+                    System.Windows.MessageBoxButton.YesNo,
+                    System.Windows.MessageBoxImage.Warning);
+
+            if (result != System.Windows.MessageBoxResult.Yes)
+            {
+                return;
+            }
+                
+            if (profile.IsBuiltIn)
+            {
+                System.Windows.MessageBox.Show(
+                    "Встроенный профиль нельзя удалить.",
+                    "Профили",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+
+                return;
+            }
+            if (!AppServices.Profiles.DeleteProfile(profile))
+            {
+                System.Windows.MessageBox.Show(
+                    "Не удалось удалить профиль.",
+                    "Ошибка",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
+
+                return;
+            }
+
             LoadProfiles();
         }
     }

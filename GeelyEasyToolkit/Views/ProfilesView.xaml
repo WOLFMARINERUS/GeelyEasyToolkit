@@ -163,12 +163,38 @@
                                Margin="0,0,0,15"/>
 
 
-                    <Button x:Name="UseProfileButton"
-                            Content="Использовать этот профиль"
-                            Width="240"
-                            Height="40"
-                            HorizontalAlignment="Left"
-                            Click="UseProfileButton_Click"/>
+                    <StackPanel>
+
+                        <Button x:Name="UseProfileButton"
+            Content="Использовать этот профиль"
+            Width="240"
+            Height="40"
+            HorizontalAlignment="Left"
+            Click="UseProfileButton_Click"/>
+
+                        <StackPanel Orientation="Horizontal"
+                Margin="0,10,0,0">
+
+                            <Button Content="Добавить"
+                Width="100"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="AddProfileButton_Click"/>
+
+                            <Button Content="Изменить"
+                Width="100"
+                Height="36"
+                Margin="0,0,10,0"
+                Click="EditProfileButton_Click"/>
+
+                            <Button Content="Удалить"
+                Width="100"
+                Height="36"
+                Click="DeleteProfileButton_Click"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
 
                 </StackPanel>
 
