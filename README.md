@@ -40,4 +40,4 @@ Geely Easy Toolkit — бесплатная Windows-программа для у
 
 Версия проекта
 
-0.1 Alpha
+0.9.0 Alpha
