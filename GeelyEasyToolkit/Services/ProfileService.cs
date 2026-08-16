@@ -13,14 +13,14 @@ namespace GeelyEasyToolkit.Services
 
         public VehicleProfile? CurrentProfile { get; private set; }
 
+        public event Action<VehicleProfile?>? CurrentProfileChanged;
+
         public List<VehicleProfile> Profiles { get; private set; } = new();
 
         public ProfileService(ILogger<ProfileService>? logger = null)
         {
             _logger = logger;
         }
-
-        public VehicleProfile? GetCurrentProfile() => CurrentProfile;
 
         private string ProfilesFolder =>
             Path.Combine(
@@ -148,9 +148,12 @@ namespace GeelyEasyToolkit.Services
             }
         }
 
-        public void LoadProfile(VehicleProfile profile)
+        public void LoadProfile(
+    VehicleProfile profile)
         {
             CurrentProfile = profile;
+
+            CurrentProfileChanged?.Invoke(CurrentProfile);
         }
 
         public VehicleProfile? DetectProfile(DeviceInfo info)
@@ -180,6 +183,12 @@ namespace GeelyEasyToolkit.Services
                     SupportsWirelessAdb = profileName == "Cityray" ? false : true,
                     RequiresDeveloperMode = true
                 };
+
+        }
+
+        public VehicleProfile? GetCurrentProfile()
+        {
+            return CurrentProfile;
         }
     }
 }

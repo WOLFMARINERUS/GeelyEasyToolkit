@@ -16,6 +16,8 @@ namespace GeelyEasyToolkit.Views
             try
             {
                 InitializeComponent();
+                AppServices.Profiles.CurrentProfileChanged +=
+    Profiles_CurrentProfileChanged;
 
                 // Подписываемся на событие Unloaded для очистки
                 this.Unloaded += ConnectionView_Unloaded;
@@ -40,6 +42,30 @@ namespace GeelyEasyToolkit.Views
                 // Логирование
                 System.Diagnostics.Debug.WriteLine($"[ConnectionView] Ошибка: {ex.Message}");
             }
+        }
+
+        private void Profiles_CurrentProfileChanged(
+    VehicleProfile? profile)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (profile != null)
+                {
+                    ProfileText.Text =
+                        $"Профиль: {profile.Name}";
+
+                    ProfileText.Foreground =
+                        System.Windows.Media.Brushes.LightGreen;
+                }
+                else
+                {
+                    ProfileText.Text =
+                        "Профиль: не выбран";
+
+                    ProfileText.Foreground =
+                        System.Windows.Media.Brushes.LightGray;
+                }
+            });
         }
 
         // ==================== ОБРАБОТЧИК ВЫГРУЗКИ ====================
@@ -175,7 +201,18 @@ namespace GeelyEasyToolkit.Views
                     AndroidText.Text = "Android: -";
                     BuildText.Text = "Build: -";
                     FirmwareText.Text = "Прошивка: -";
-                    ProfileText.Text = "Профиль: -";
+                    VehicleProfile? currentProfile =
+    AppServices.Profiles.GetCurrentProfile();
+
+                    ProfileText.Text =
+                        currentProfile != null
+                            ? $"Профиль: {currentProfile.Name}"
+                            : "Профиль: не выбран";
+
+                    ProfileText.Foreground =
+                        currentProfile != null
+                            ? System.Windows.Media.Brushes.LightGreen
+                            : System.Windows.Media.Brushes.LightGray;
                     return;
                 }
 
@@ -382,6 +419,10 @@ namespace GeelyEasyToolkit.Views
 
                 // Отписываемся от события Unloaded
                 this.Unloaded -= ConnectionView_Unloaded;
+
+                // Отписываемся от события профиля
+                AppServices.Profiles.CurrentProfileChanged -=
+                    Profiles_CurrentProfileChanged;
 
                 // Отписываемся от DeviceMonitor
                 if (AppServices.DeviceMonitor != null)
