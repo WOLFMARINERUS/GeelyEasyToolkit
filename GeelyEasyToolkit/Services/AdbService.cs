@@ -53,6 +53,25 @@ namespace GeelyEasyToolkit.Services
                 : error;
 
         }
+
+        public string Version
+        {
+            get
+            {
+                try
+                {
+                    if (!IsAdbAvailable())
+                        return "ADB не найден";
+
+                    return Execute("version");
+                }
+                catch (Exception ex)
+                {
+                    return $"❌ Ошибка: {ex.Message}";
+                }
+            }
+        }
+
         public bool IsDeviceConnected()
         {
             string result = Execute("devices");
@@ -395,8 +414,8 @@ namespace GeelyEasyToolkit.Services
 
             return true;
         }
-             
-        
+
+
         public string ExecuteShellCommand(string command)
         {
             if (string.IsNullOrWhiteSpace(command))
@@ -405,9 +424,24 @@ namespace GeelyEasyToolkit.Services
             return Execute($"shell {command}");
         }
 
-        internal string InstallApplication(string fileName)
+        public string InstallApplication(string fileName)
         {
-            throw new NotImplementedException();
+            return InstallApk(fileName);
+        }
+
+        public string GetVersion()
+        {
+            try
+            {
+                if (!IsAdbAvailable())
+                    return "ADB не найден";
+
+                return Execute("version");
+            }
+            catch (Exception ex)
+            {
+                return $"❌ Ошибка: {ex.Message}";
+            }
         }
     }
 }

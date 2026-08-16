@@ -16,6 +16,7 @@ namespace GeelyEasyToolkit
         private readonly InstalledApplicationsView _installedApplicationsView = new();
         private readonly RepositoryView _repositoryView = new();
         private readonly ProfilesView _profilesView = new();
+        private readonly DeveloperView _developerView = new();
 
         public MainWindow()
         {
@@ -35,7 +36,9 @@ namespace GeelyEasyToolkit
             AppServices.Navigation.Navigate("Dashboard");
             AppServices.Navigation.Register("Repository", _repositoryView);
             AppServices.Navigation.Register("Profiles", _profilesView);
+            AppServices.Navigation.Register("Developer", _developerView);
             HighlightButton(DashboardButton);
+
         }
 
         private void LoadWindowSettings()
@@ -118,6 +121,13 @@ namespace GeelyEasyToolkit
         {
             AppServices.Navigation.Navigate("Repository");
             HighlightButton(RepositoryButton);
+        }
+
+        private void DeveloperButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppServices.Navigation.Navigate("Developer");
+
+            HighlightButton(DeveloperButton);
         }
 
         private void HighlightButton(System.Windows.Controls.Button activeButton)

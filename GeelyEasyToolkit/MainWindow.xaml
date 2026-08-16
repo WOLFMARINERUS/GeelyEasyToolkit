@@ -115,7 +115,8 @@
 
                 <Button x:Name="DeveloperButton"
         Style="{StaticResource NavigationButtonStyle}"
-        Content="🛠 Разработчик"/>
+        Content="🛠 Разработчик"
+        Click="DeveloperButton_Click"/>
 
             </StackPanel>
 
