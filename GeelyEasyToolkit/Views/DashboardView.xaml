@@ -97,27 +97,51 @@
                     </StackPanel>
 
                 </Border>
-                <Border Width="220"
-                        Height="130"
-                        Margin="10"
-                        Background="#3A4050"
-                        CornerRadius="12">
+                <Border x:Name="ApplicationsCard"
+        Width="220"
+        Height="130"
+        Margin="10"
+        Background="#3A4050"
+        CornerRadius="12"
+        Cursor="Hand"
+        MouseLeftButtonUp="ApplicationsCard_MouseLeftButtonUp">
+
+                    <Border.Style>
+                        <Style TargetType="Border">
+
+                            <Setter Property="Background"
+                    Value="#3A4050"/>
+
+                            <Style.Triggers>
+
+                                <Trigger Property="IsMouseOver"
+                         Value="True">
+
+                                    <Setter Property="Background"
+                            Value="#465166"/>
+
+                                </Trigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+                    </Border.Style>
 
                     <StackPanel VerticalAlignment="Center">
 
                         <TextBlock Text="📦"
-                                   FontSize="36"
-                                   HorizontalAlignment="Center"/>
+                   FontSize="36"
+                   HorizontalAlignment="Center"/>
 
                         <TextBlock Text="Приложения"
-                                   Foreground="White"
-                                   FontSize="18"
-                                   HorizontalAlignment="Center"/>
+                   Foreground="White"
+                   FontSize="18"
+                   HorizontalAlignment="Center"/>
 
                         <TextBlock x:Name="RepositoryStatusText"
-           Text="Репозиторий не выбран"
-           Foreground="LightGray"
-           HorizontalAlignment="Center"/>
+                   Text="Репозиторий не выбран"
+                   Foreground="LightGray"
+                   HorizontalAlignment="Center"/>
 
                     </StackPanel>
 

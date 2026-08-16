@@ -129,12 +129,86 @@
         <!-- Список приложений -->
 
         <ListView x:Name="RepositoryList"
-                  Grid.Row="2"
-                  Background="#252932"
-                  Foreground="White"
-                  BorderBrush="#596273"
-                  BorderThickness="1"
-                  MouseDoubleClick="RepositoryList_MouseDoubleClick">
+          Grid.Row="2"
+          Background="#2F3440"
+          Foreground="White"
+          BorderBrush="#596273"
+          BorderThickness="1"
+          MouseDoubleClick="RepositoryList_MouseDoubleClick">
+
+            <ListView.Resources>
+
+                <!-- Стиль строк как в разделе "Установленные" -->
+
+                <Style TargetType="ListViewItem">
+
+                    <Setter Property="Background"
+                    Value="#2F3440"/>
+
+                    <Setter Property="Foreground"
+                    Value="White"/>
+
+                    <Setter Property="BorderThickness"
+                    Value="0"/>
+
+                    <Setter Property="Padding"
+                    Value="5,2"/>
+
+                    <Style.Triggers>
+
+                        <!-- Наведение -->
+
+                        <Trigger Property="IsMouseOver"
+                         Value="True">
+
+                            <Setter Property="Background"
+                            Value="#3A4050"/>
+
+                        </Trigger>
+
+                        <!-- Выбранная строка -->
+
+                        <Trigger Property="IsSelected"
+                         Value="True">
+
+                            <Setter Property="Background"
+                            Value="#4A5A7A"/>
+
+                        </Trigger>
+
+                    </Style.Triggers>
+
+                </Style>
+
+
+                <!-- Заголовки колонок -->
+
+                <Style TargetType="GridViewColumnHeader">
+
+                    <Setter Property="Background"
+                    Value="#3A4050"/>
+
+                    <Setter Property="Foreground"
+                    Value="White"/>
+
+                    <Setter Property="BorderBrush"
+                    Value="#596273"/>
+
+                    <Setter Property="BorderThickness"
+                    Value="0,0,1,0"/>
+
+                    <Setter Property="Height"
+                    Value="35"/>
+
+                    <Setter Property="HorizontalContentAlignment"
+                    Value="Left"/>
+
+                    <Setter Property="Padding"
+                    Value="10,0"/>
+
+                </Style>
+
+            </ListView.Resources>
 
             <ListView.View>
 

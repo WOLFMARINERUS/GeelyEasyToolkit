@@ -1,6 +1,8 @@
 ﻿using GeelyEasyToolkit.Services;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace GeelyEasyToolkit.Views
@@ -22,6 +24,13 @@ namespace GeelyEasyToolkit.Views
             {
                 UpdateDashboard();
             });
+        }
+
+        private void ApplicationsCard_MouseLeftButtonUp(
+    object sender,
+    MouseButtonEventArgs e)
+        {
+            AppServices.Navigation.Navigate("Applications");
         }
 
         private void UpdateDashboard()
@@ -54,21 +63,24 @@ namespace GeelyEasyToolkit.Views
             }
 
             //------------------------------------------
-            // Репозиторий
+            // Приложения / репозиторий
             //------------------------------------------
 
-            string folder = AppServices.Settings.ApkFolder;
-
-            if (!string.IsNullOrWhiteSpace(folder) &&
-                Directory.Exists(folder))
+            if (AppServices.Repository.Repository != null)
             {
-                RepositoryStatusText.Text = "🟢 Готов";
-                RepositoryStatusText.Foreground = System.Windows.Media.Brushes.LightGreen;
+                RepositoryStatusText.Text =
+                    "🟢 Репозиторий готов";
+
+                RepositoryStatusText.Foreground =
+                    System.Windows.Media.Brushes.LightGreen;
             }
             else
             {
-                RepositoryStatusText.Text = "🔴 Не выбран";
-                RepositoryStatusText.Foreground = System.Windows.Media.Brushes.OrangeRed;
+                RepositoryStatusText.Text =
+                    "🔴 Репозиторий не загружен";
+
+                RepositoryStatusText.Foreground =
+                    System.Windows.Media.Brushes.OrangeRed;
             }
         }
     }

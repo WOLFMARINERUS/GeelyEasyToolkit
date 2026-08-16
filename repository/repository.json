@@ -1,0 +1,61 @@
+{
+  "Applications": [
+    {
+      "Name": "GStore",
+      "Category": "Launchers",
+      "Version": "1.1.6",
+      "FileName": "GStore1.1.6.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ],
+      "IsSelected": false,
+      "PackageName": "",
+      "AdbCommands": []
+    },
+    {
+      "Name": "\u042F\u043D\u0434\u0435\u043A\u0441 \u041D\u0430\u0432\u0438\u0433\u0430\u0442\u043E\u0440",
+      "Category": "Navigation",
+      "Version": "1.0",
+      "FileName": "yandex.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ],
+      "IsSelected": false,
+      "PackageName": "",
+      "AdbCommands": []
+    },
+    {
+      "Name": "VLC",
+      "Category": "Players",
+      "Version": "3.0",
+      "FileName": "vlc.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas",
+        "Preface"
+      ],
+      "IsSelected": false,
+      "PackageName": "",
+      "AdbCommands": []
+    },
+    {
+      "Name": "GNSS Client",
+      "Category": "Navigation",
+      "Version": "2.10.1",
+      "FileName": "gnss-client-v2.10.1.apk",
+      "Compatible": [],
+      "IsSelected": false,
+      "PackageName": "dezz.gnssshare.client",
+      "AdbCommands": [
+        {
+          "Command": "appops set dezz.gnssshare.client android:mock_location allow",
+          "Description": ""
+        }
+      ]
+    }
+  ]
+}
