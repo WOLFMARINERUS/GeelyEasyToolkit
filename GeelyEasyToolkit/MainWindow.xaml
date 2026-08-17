@@ -5,16 +5,24 @@
         Title="Geely Easy Toolkit"
         Height="1000"
         Width="1400"
-        MinHeight="900"
+        MinHeight="1010"
         MinWidth="1200"
         WindowStartupLocation="CenterScreen"
-        Background="#1C1F26">
-        
+        Background="#1C1F26"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
+
     <Grid>
 
         <Grid.RowDefinitions>
+            <!-- Кастомный заголовок (сверху) -->
+            <RowDefinition Height="32"/>
+            <!-- Ваша верхняя панель (60) -->
             <RowDefinition Height="60"/>
+            <!-- Основной контент -->
             <RowDefinition Height="*"/>
+            <!-- Нижняя строка -->
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
@@ -26,8 +34,143 @@
             <ColumnDefinition Width="880*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Верхняя панель -->
+        <!-- ===================================================== -->
+        <!-- КАСТОМНЫЙ ЗАГОЛОВОК (строка 0) -->
+        <!-- ===================================================== -->
         <Border Grid.Row="0"
+                Grid.ColumnSpan="5"
+                Background="#1C1F26"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
+                Cursor="Hand">
+
+            <Grid Margin="15,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="⚡ GET"
+                           FontSize="13"
+                           FontWeight="SemiBold"
+                           Foreground="#9EA5B3"
+                           VerticalAlignment="Center"/>
+
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+
+                    <!-- Кнопка "Свернуть" -->
+                    <Button x:Name="MinimizeButton"
+                            Content="─"
+                            Width="28"
+                            Height="28"
+                            Background="Transparent"
+                            Foreground="#596273"
+                            BorderThickness="0"
+                            Click="MinimizeWindow_Click"
+                            Cursor="Hand"
+                            FontSize="14"
+                            FontWeight="Bold">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="White"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="#596273"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+
+                    <!-- Кнопка "Развернуть" -->
+                    <Button x:Name="MaximizeButton"
+                            Content="☐"
+                            Width="28"
+                            Height="28"
+                            Background="Transparent"
+                            Foreground="#596273"
+                            BorderThickness="0"
+                            Click="MaximizeWindow_Click"
+                            Cursor="Hand"
+                            FontSize="14"
+                            FontWeight="Bold">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="White"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="#596273"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+
+                    <!-- Кнопка "Закрыть" -->
+                    <Button x:Name="CloseButton"
+                            Content="✕"
+                            Width="28"
+                            Height="28"
+                            Background="Transparent"
+                            Foreground="#596273"
+                            BorderThickness="0"
+                            Click="CloseWindow_Click"
+                            Cursor="Hand"
+                            FontSize="14"
+                            FontWeight="Bold">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="#E81123"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                        To="#596273"
+                                                        Duration="0:0:0.15"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+        <!-- ===================================================== -->
+        <!-- ВЕРХНЯЯ ПАНЕЛЬ (была строка 0, стала строка 1) -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="1"
                 Grid.ColumnSpan="5"
                 Background="#252932">
 
@@ -38,30 +181,32 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Text="Geely Easy Toolkit"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    VerticalAlignment="Center"/>
+                <TextBlock x:Name="TitleTextBlock"
+                           Text="Geely Easy Toolkit"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Cursor="Hand">
+                    <TextBlock.ToolTip>
+                        <ToolTip>Тройной клик для входа в режим разработчика</ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
 
-                <StackPanel
-                    Grid.Column="1"
-                    Orientation="Horizontal"
-                    VerticalAlignment="Center">
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
 
-                    <Ellipse
-    x:Name="ConnectionIndicator"
-    Width="12"
-    Height="12"
-    Fill="Red"
-    Margin="0,0,10,0"/>
+                    <Ellipse x:Name="ConnectionIndicator"
+                             Width="12"
+                             Height="12"
+                             Fill="Red"
+                             Margin="0,0,10,0"/>
 
-                    <TextBlock
-    x:Name="ConnectionStatusText"
-    Text="Не подключено"
-    Foreground="White"
-    FontSize="16"/>
+                    <TextBlock x:Name="ConnectionStatusText"
+                               Text="Не подключено"
+                               Foreground="White"
+                               FontSize="16"/>
 
                 </StackPanel>
 
@@ -69,74 +214,83 @@
 
         </Border>
 
-        <!-- Левое меню -->
-        <Border Grid.Row="1"
+        <!-- ===================================================== -->
+        <!-- ЛЕВОЕ МЕНЮ (была строка 1, стала строка 2) -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="2"
                 Background="#252932" Grid.ColumnSpan="3">
 
             <StackPanel Margin="15">
 
                 <Button x:Name="DashboardButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🏠 Dashboard"
-        Click="DashboardButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🏠 Dashboard"
+                        Click="DashboardButton_Click"/>
 
                 <Button x:Name="ConnectionButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🔌 Подключение"
-        Click="ConnectionButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🔌 Подключение"
+                        Click="ConnectionButton_Click"/>
 
                 <Button x:Name="ApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📦 Приложения"
-        Click="ApplicationsButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📦 Приложения"
+                        Click="ApplicationsButton_Click"/>
 
                 <Button x:Name="ProfilesButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🚗 Профили"
-        Click="ProfilesButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🚗 Профили"
+                        Click="ProfilesButton_Click"/>
 
                 <Button x:Name="RepositoryButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📁 Репозиторий"
-        Click="RepositoryButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📁 Репозиторий"
+                        Click="RepositoryButton_Click"/>
 
                 <Button x:Name="InstalledApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📱 Установленные"
-        Click="InstalledApplicationsButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📱 Установленные"
+                        Click="InstalledApplicationsButton_Click"/>
 
                 <Button x:Name="LogsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📄 Логи"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📄 Логи"/>
 
                 <Button x:Name="SettingsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="⚙ Настройки"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="⚙ Настройки"/>
 
                 <Button x:Name="DeveloperButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🛠 Разработчик"
-        Click="DeveloperButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🛠 Разработчик"
+                        Visibility="Collapsed"
+                        Click="DeveloperButton_Click"/>
 
             </StackPanel>
 
         </Border>
 
-        <!-- Рабочая область -->
-        <Border Grid.Row="1"
-        Grid.Column="3"
-        Margin="20,20,20,20"
-        CornerRadius="10"
-        Background="#2F3440" Grid.ColumnSpan="2">
+        <!-- ===================================================== -->
+        <!-- РАБОЧАЯ ОБЛАСТЬ (была строка 1, стала строка 2) -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="2"
+                Grid.Column="3"
+                Margin="20,20,20,20"
+                CornerRadius="10"
+                Background="#2F3440" Grid.ColumnSpan="2">
 
             <ContentControl x:Name="MainContent"/>
 
         </Border>
 
-        <!-- Нижняя строка -->
-        <Border Grid.Row="1"
+        <!-- ===================================================== -->
+        <!-- НИЖНЯЯ СТРОКА (была строка 1, стала строка 2, но Grid.RowSpan=2) -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="2"
                 Grid.ColumnSpan="5"
-                Background="#252932" Margin="0,894,0,0" Grid.RowSpan="2">
+                Background="#252932" 
+                Margin="0,894,0,0" 
+                Grid.RowSpan="2">
 
             <Grid Margin="15,0">
 
@@ -145,16 +299,15 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Text="Подключите автомобиль через USB."
-                    Foreground="White"
-                    VerticalAlignment="Center"/>
+                <TextBlock x:Name="StatusBarText"
+                           Text="Подключите автомобиль через USB-порт."
+                           Foreground="White"
+                           VerticalAlignment="Center"/>
 
-                <TextBlock
-                    Grid.Column="1"
-                    Text="v0.1 Alpha"
-                    Foreground="Gray"
-                    VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1"
+                           Text="v0.9 Alpha"
+                           Foreground="Gray"
+                           VerticalAlignment="Center"/>
 
             </Grid>
 

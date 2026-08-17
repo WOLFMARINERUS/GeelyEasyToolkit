@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GeelyEasyToolkit.Views;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace GeelyEasyToolkit.Services
@@ -37,6 +38,11 @@ namespace GeelyEasyToolkit.Services
             {
                 _contentControl.Content = page;
             }
+        }
+
+        internal DeveloperView GetCurrentView()
+        {
+            throw new NotImplementedException();
         }
     }
 }

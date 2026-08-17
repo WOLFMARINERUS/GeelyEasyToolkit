@@ -27,5 +27,12 @@ namespace GeelyEasyToolkit.Services
         public double WindowTop { get; set; } = -1;
 
         public bool WindowMaximized { get; set; } = false;
+
+        public bool ShowDeveloperTab { get; set; } = false;  // По умолчанию скрыта
+
+        internal void Save()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
