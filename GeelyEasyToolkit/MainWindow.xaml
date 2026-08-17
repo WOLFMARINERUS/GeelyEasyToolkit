@@ -300,7 +300,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock x:Name="StatusBarText"
-                           Text="Подключите автомобиль через USB."
+                           Text="Подключите автомобиль через USB-порт."
                            Foreground="White"
                            VerticalAlignment="Center"/>
 
