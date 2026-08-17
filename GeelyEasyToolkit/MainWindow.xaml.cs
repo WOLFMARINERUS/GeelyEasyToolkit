@@ -7,11 +7,45 @@ using System.Windows.Media;
 using System.Windows.Interop;
 // 👇 ДОБАВЛЕНО
 using System.Windows.Input;
+// 👇 ДОБАВЛЕНО: для Win32 API
+using System.Runtime.InteropServices;
 
 namespace GeelyEasyToolkit
 {
     public partial class MainWindow : Window
     {
+        // 👇 ДОБАВЛЕНО: Win32 API для изменения цвета заголовка
+        [DllImport("user32.dll")]
+        private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct WindowCompositionAttributeData
+        {
+            public WindowCompositionAttribute Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
+        private enum WindowCompositionAttribute
+        {
+            WCA_ACCENT_POLICY = 19
+        }
+
+        private enum AccentState
+        {
+            ACCENT_ENABLE_BLURBEHIND = 3,
+            ACCENT_ENABLE_ACRYLICBLURBEHIND = 4
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct AccentPolicy
+        {
+            public AccentState AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+
         private readonly DashboardView _dashboardView = new();
         private readonly ConnectionView _connectionView = new();
         private readonly ApplicationsView _applicationsView = new();
@@ -28,6 +62,9 @@ namespace GeelyEasyToolkit
         {
             InitializeComponent();
             var windowHandle = new WindowInteropHelper(this).Handle;
+
+            // 👇 ДОБАВЛЕНО: установка тёмного цвета заголовка
+            this.SourceInitialized += MainWindow_SourceInitialized;
 
             LoadWindowSettings();
 
@@ -50,6 +87,78 @@ namespace GeelyEasyToolkit
             {
                 TitleTextBlock.MouseDown += TitleTextBlock_MouseDown;
             }
+        }
+
+        // 👇 ДОБАВЛЕНО: обработчик события SourceInitialized для изменения цвета заголовка
+        private void MainWindow_SourceInitialized(object sender, EventArgs e)
+        {
+            try
+            {
+                var handle = new WindowInteropHelper(this).Handle;
+                if (handle == IntPtr.Zero) return;
+
+                // Настройка цвета заголовка (тёмный)
+                var accent = new AccentPolicy
+                {
+                    AccentState = AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND,
+                    AccentFlags = 0x20 | 0x40 | 0x80,
+                    GradientColor = 0x00252A32  // тёмно-серый (#252932)
+                };
+
+                var accentStructSize = Marshal.SizeOf(accent);
+                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                Marshal.StructureToPtr(accent, accentPtr, false);
+
+                var data = new WindowCompositionAttributeData
+                {
+                    Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                    Data = accentPtr,
+                    SizeOfData = accentStructSize
+                };
+
+                SetWindowCompositionAttribute(handle, ref data);
+                Marshal.FreeHGlobal(accentPtr);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MainWindow] Ошибка изменения заголовка: {ex.Message}");
+            }
+        }
+
+        // 👇 ДОБАВЛЕНО: перетаскивание окна
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 1)
+            {
+                this.DragMove();
+            }
+        }
+
+        // 👇 ДОБАВЛЕНО: кнопка "Свернуть"
+        private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        // 👇 ДОБАВЛЕНО: кнопка "Развернуть"
+        private void MaximizeWindow_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                MaximizeButton.Content = "☐";
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                MaximizeButton.Content = "⧉";
+            }
+        }
+
+        // 👇 ДОБАВЛЕНО: кнопка "Закрыть"
+        private void CloseWindow_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void LoadWindowSettings()
