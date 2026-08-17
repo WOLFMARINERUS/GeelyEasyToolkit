@@ -9,7 +9,7 @@
         MinWidth="1200"
         WindowStartupLocation="CenterScreen"
         Background="#1C1F26">
-        
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -38,12 +38,19 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Text="Geely Easy Toolkit"
-                    FontSize="24"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    VerticalAlignment="Center"/>
+                <!-- 👇 ИЗМЕНЕНО: добавлен x:Name и Cursor для кликабельности -->
+                <TextBlock x:Name="TitleTextBlock"
+                           Text="Geely Easy Toolkit"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Cursor="Hand">
+                    <!-- 👇 ДОБАВЛЕНО: всплывающая подсказка -->
+                    <TextBlock.ToolTip>
+                        <ToolTip>Тройной клик для входа в режим разработчика</ToolTip>
+                    </TextBlock.ToolTip>
+                </TextBlock>
 
                 <StackPanel
                     Grid.Column="1"
@@ -51,17 +58,17 @@
                     VerticalAlignment="Center">
 
                     <Ellipse
-    x:Name="ConnectionIndicator"
-    Width="12"
-    Height="12"
-    Fill="Red"
-    Margin="0,0,10,0"/>
+                        x:Name="ConnectionIndicator"
+                        Width="12"
+                        Height="12"
+                        Fill="Red"
+                        Margin="0,0,10,0"/>
 
                     <TextBlock
-    x:Name="ConnectionStatusText"
-    Text="Не подключено"
-    Foreground="White"
-    FontSize="16"/>
+                        x:Name="ConnectionStatusText"
+                        Text="Не подключено"
+                        Foreground="White"
+                        FontSize="16"/>
 
                 </StackPanel>
 
@@ -76,47 +83,49 @@
             <StackPanel Margin="15">
 
                 <Button x:Name="DashboardButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🏠 Dashboard"
-        Click="DashboardButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🏠 Dashboard"
+                        Click="DashboardButton_Click"/>
 
                 <Button x:Name="ConnectionButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🔌 Подключение"
-        Click="ConnectionButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🔌 Подключение"
+                        Click="ConnectionButton_Click"/>
 
                 <Button x:Name="ApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📦 Приложения"
-        Click="ApplicationsButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📦 Приложения"
+                        Click="ApplicationsButton_Click"/>
 
                 <Button x:Name="ProfilesButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🚗 Профили"
-        Click="ProfilesButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🚗 Профили"
+                        Click="ProfilesButton_Click"/>
 
                 <Button x:Name="RepositoryButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📁 Репозиторий"
-        Click="RepositoryButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📁 Репозиторий"
+                        Click="RepositoryButton_Click"/>
 
                 <Button x:Name="InstalledApplicationsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📱 Установленные"
-        Click="InstalledApplicationsButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📱 Установленные"
+                        Click="InstalledApplicationsButton_Click"/>
 
                 <Button x:Name="LogsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="📄 Логи"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="📄 Логи"/>
 
                 <Button x:Name="SettingsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="⚙ Настройки"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="⚙ Настройки"/>
 
+                <!-- 👇 ИЗМЕНЕНО: добавлен Visibility="Collapsed" для скрытия по умолчанию -->
                 <Button x:Name="DeveloperButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="🛠 Разработчик"
-        Click="DeveloperButton_Click"/>
+                        Style="{StaticResource NavigationButtonStyle}"
+                        Content="🛠 Разработчик"
+                        Visibility="Collapsed"
+                        Click="DeveloperButton_Click"/>
 
             </StackPanel>
 
@@ -124,19 +133,22 @@
 
         <!-- Рабочая область -->
         <Border Grid.Row="1"
-        Grid.Column="3"
-        Margin="20,20,20,20"
-        CornerRadius="10"
-        Background="#2F3440" Grid.ColumnSpan="2">
+                Grid.Column="3"
+                Margin="20,20,20,20"
+                CornerRadius="10"
+                Background="#2F3440" Grid.ColumnSpan="2">
 
             <ContentControl x:Name="MainContent"/>
 
         </Border>
 
-        <!-- Нижняя строка -->
+        <!-- Нижняя строка (статус-бар) -->
+        <!-- 👇 ИЗМЕНЕНО: добавлен x:Name и Grid.RowSpan -->
         <Border Grid.Row="1"
                 Grid.ColumnSpan="5"
-                Background="#252932" Margin="0,894,0,0" Grid.RowSpan="2">
+                Background="#252932" 
+                Margin="0,894,0,0" 
+                Grid.RowSpan="2">
 
             <Grid Margin="15,0">
 
@@ -145,10 +157,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    Text="Подключите автомобиль через USB."
-                    Foreground="White"
-                    VerticalAlignment="Center"/>
+                <!-- 👇 ИЗМЕНЕНО: добавлен x:Name для статус-бара -->
+                <TextBlock x:Name="StatusBarText"
+                           Text="Подключите автомобиль через USB."
+                           Foreground="White"
+                           VerticalAlignment="Center"/>
 
                 <TextBlock
                     Grid.Column="1"
