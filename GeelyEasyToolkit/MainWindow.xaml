@@ -257,8 +257,9 @@
                         Content="📄 Логи"/>
 
                 <Button x:Name="SettingsButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="⚙ Настройки"/>
+        Style="{StaticResource NavigationButtonStyle}"
+        Content="⚙ Настройки"
+        Click="SettingsButton_Click"/>
 
                 <Button x:Name="DeveloperButton"
                         Style="{StaticResource NavigationButtonStyle}"
@@ -305,7 +306,7 @@
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
-                           Text="v0.9 Alpha"
+                           Text="v1.0"
                            Foreground="Gray"
                            VerticalAlignment="Center"/>
 
