@@ -8,7 +8,12 @@
         MinHeight="900"
         MinWidth="1200"
         WindowStartupLocation="CenterScreen"
-        Background="#1C1F26">
+        Background="#1C1F26"
+        WindowStyle="None"                    <!-- 👈 ДОБАВЛЕНО: убирает стандартный заголовок -->
+    AllowsTransparency="True"
+    <!-- 👈 ДОБАВЛЕНО: включает прозрачность -->
+    ResizeMode="CanResizeWithGrip">
+    <!-- 👈 ДОБАВЛЕНО: оставляет возможность изменять размер -->
 
     <Grid>
 
