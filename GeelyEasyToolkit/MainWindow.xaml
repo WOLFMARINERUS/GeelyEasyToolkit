@@ -19,27 +19,26 @@
         <Grid.RowDefinitions>
             <!-- Кастомный заголовок (сверху) -->
             <RowDefinition Height="32"/>
-            <!-- Ваша верхняя панель (60) -->
+            <!-- Ваша верхняя панель -->
             <RowDefinition Height="60"/>
-            <!-- Основной контент -->
+            <!-- Основной контент (левое меню + рабочая область) -->
             <RowDefinition Height="*"/>
             <!-- Нижняя строка -->
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="46.5"/>
-            <ColumnDefinition Width="33.5"/>
-            <ColumnDefinition Width="261*"/>
-            <ColumnDefinition Width="880*"/>
+            <!-- Левое меню -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Рабочая область (заполняет оставшееся место) -->
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- ===================================================== -->
         <!-- КАСТОМНЫЙ ЗАГОЛОВОК (строка 0) -->
         <!-- ===================================================== -->
         <Border Grid.Row="0"
-                Grid.ColumnSpan="5"
+                Grid.ColumnSpan="2"
                 Background="#1C1F26"
                 MouseLeftButtonDown="TitleBar_MouseLeftButtonDown"
                 Cursor="Hand">
@@ -169,10 +168,10 @@
         </Border>
 
         <!-- ===================================================== -->
-        <!-- ВЕРХНЯЯ ПАНЕЛЬ (была строка 0, стала строка 1) -->
+        <!-- ВЕРХНЯЯ ПАНЕЛЬ (строка 1) -->
         <!-- ===================================================== -->
         <Border Grid.Row="1"
-                Grid.ColumnSpan="5"
+                Grid.ColumnSpan="2"
                 Background="#252932">
 
             <Grid Margin="20,0">
@@ -216,10 +215,11 @@
         </Border>
 
         <!-- ===================================================== -->
-        <!-- ЛЕВОЕ МЕНЮ (была строка 1, стала строка 2) -->
+        <!-- ЛЕВОЕ МЕНЮ (строка 2, колонна 0) -->
         <!-- ===================================================== -->
         <Border Grid.Row="2"
-                Background="#252932" Grid.ColumnSpan="3">
+                Grid.Column="0"
+                Background="#252932" HorizontalAlignment="Left" Width="200">
 
             <StackPanel Margin="15">
 
@@ -274,26 +274,24 @@
         </Border>
 
         <!-- ===================================================== -->
-        <!-- РАБОЧАЯ ОБЛАСТЬ (была строка 1, стала строка 2) -->
+        <!-- РАБОЧАЯ ОБЛАСТЬ (строка 2, колонна 1) -->
         <!-- ===================================================== -->
         <Border Grid.Row="2"
-                Grid.Column="3"
+                Grid.Column="1"
                 Margin="20,20,20,20"
                 CornerRadius="10"
-                Background="#2F3440" Grid.ColumnSpan="2">
+                Background="#2F3440">
 
             <ContentControl x:Name="MainContent"/>
 
         </Border>
 
         <!-- ===================================================== -->
-        <!-- НИЖНЯЯ СТРОКА (была строка 1, стала строка 2, но Grid.RowSpan=2) -->
+        <!-- НИЖНЯЯ СТРОКА (строка 3) -->
         <!-- ===================================================== -->
-        <Border Grid.Row="2"
-                Grid.ColumnSpan="5"
-                Background="#252932" 
-                Margin="0,894,0,0" 
-                Grid.RowSpan="2">
+        <Border Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Background="#252932">
 
             <Grid Margin="15,0">
 
