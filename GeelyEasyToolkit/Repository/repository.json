@@ -17,9 +17,7 @@
       "Version": "1.0",
       "FileName": "yandex.apk",
       "Compatible": [
-        "Cityray",
-        "Atlas",
-        "Preface"
+        "Cityray"
       ]
     },
     {
@@ -31,6 +29,23 @@
         "Cityray",
         "Atlas",
         "Preface"
+      ]
+    },
+    {
+      "Name": "GNSS-CLIENT",
+      "Category": "Navigation",
+      "Version": "2.10.1",
+      "FileName": "gnss-client-v2.10.1.apk",
+      "Compatible": [
+        "Cityray",
+        "Atlas"
+      ],
+      "PackageName": "dezz.gnssshare.client",
+      "AdbCommands": [
+        {
+          "Command": "appops set dezz.gnssshare.client android:mock_location allow",
+          "Description": ""
+        }
       ]
     }
   ]

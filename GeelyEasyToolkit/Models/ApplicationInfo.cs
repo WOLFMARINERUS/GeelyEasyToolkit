@@ -15,6 +15,19 @@
 
         public bool IsSelected { get; set; }
 
+        public bool IsCompatibleWithProfile(string? profileName)
+        {
+            if (string.IsNullOrWhiteSpace(profileName))
+                return true;
+
+            if (Compatible == null || Compatible.Count == 0)
+                return false;
+
+            return Compatible.Contains(
+                profileName,
+                StringComparer.OrdinalIgnoreCase);
+        }
+
         public string PackageName { get; set; } = "";
 
         public List<AdbCommandInfo> AdbCommands { get; set; } = new();

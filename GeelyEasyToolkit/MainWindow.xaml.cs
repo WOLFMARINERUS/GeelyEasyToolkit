@@ -52,6 +52,7 @@ namespace GeelyEasyToolkit
         private readonly InstalledApplicationsView _installedApplicationsView = new();
         private readonly RepositoryView _repositoryView = new();
         private readonly ProfilesView _profilesView = new();
+        private readonly LogsView _logsView = new();
         private readonly SettingsView _settingsView = new();
         private readonly DeveloperView _developerView = new();
 
@@ -80,6 +81,7 @@ namespace GeelyEasyToolkit
             AppServices.Navigation.Navigate("Dashboard");
             AppServices.Navigation.Register("Repository", _repositoryView);
             AppServices.Navigation.Register("Profiles", _profilesView);
+            AppServices.Navigation.Register("Logs",    _logsView);
             AppServices.Navigation.Register("Settings", _settingsView);
             AppServices.Navigation.Register("Developer", _developerView);
             HighlightButton(DashboardButton);
@@ -294,6 +296,13 @@ namespace GeelyEasyToolkit
                 ConnectionIndicator.Fill = System.Windows.Media.Brushes.Red;
                 ConnectionStatusText.Text = "Не подключено";
             }
+        }
+
+        private void LogsButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppServices.Navigation.Navigate("Logs");
+
+            HighlightButton(LogsButton);
         }
 
         // 👇 ДОБАВЛЕНО: обработчик тройного клика
