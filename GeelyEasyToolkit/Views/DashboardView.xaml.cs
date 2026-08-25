@@ -14,8 +14,17 @@ namespace GeelyEasyToolkit.Views
             InitializeComponent();
 
             AppServices.DeviceMonitor.ConnectionChanged += DeviceMonitor_ConnectionChanged;
+            AppServices.Repository.RepositoryChanged += Repository_RepositoryChanged;
 
             UpdateDashboard();
+        }
+
+        private void Repository_RepositoryChanged()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                UpdateDashboard();
+            });
         }
 
         private void DeviceMonitor_ConnectionChanged(bool connected)

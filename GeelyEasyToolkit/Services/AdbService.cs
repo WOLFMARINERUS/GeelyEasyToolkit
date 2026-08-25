@@ -106,9 +106,20 @@ namespace GeelyEasyToolkit.Services
         public string InstallApk(string apkPath)
         {
             if (!File.Exists(apkPath))
+            {
+                AppServices.Logger.Error($"Попытка установки APK: файл не найден - {apkPath}");
                 return "Файл APK не найден.";
+            }
 
-            return Execute($"install -r \"{apkPath}\"");
+            AppServices.Logger.Log($"Начало установки APK: {Path.GetFileName(apkPath)}");
+            string result = Execute($"install -r \"{apkPath}\"");
+
+            if (result.Contains("Success", StringComparison.OrdinalIgnoreCase))
+                AppServices.Logger.Log($"✓ APK успешно установлен: {Path.GetFileName(apkPath)}");
+            else
+                AppServices.Logger.Error($"✗ Ошибка при установке APK: {result}");
+
+            return result;
         }
         public bool Install(string apk)
         {
@@ -367,26 +378,54 @@ namespace GeelyEasyToolkit.Services
         public string UninstallApplication(string packageName)
         {
             if (string.IsNullOrWhiteSpace(packageName))
+            {
+                AppServices.Logger.Warning("Попытка деинсталляции: имя пакета не указано");
                 return "Package Name не указан.";
+            }
 
             if (!IsDeviceConnected())
+            {
+                AppServices.Logger.Warning($"Попытка деинсталляции {packageName}: устройство не подключено");
                 return "Устройство не подключено.";
+            }
 
-            return Execute($"uninstall {packageName}");
+            AppServices.Logger.Log($"Начало деинсталляции приложения: {packageName}");
+            string result = Execute($"uninstall {packageName}");
+
+            if (result.Contains("Success", StringComparison.OrdinalIgnoreCase))
+                AppServices.Logger.Log($"✓ Приложение успешно удалено: {packageName}");
+            else
+                AppServices.Logger.Error($"✗ Ошибка при деинсталляции {packageName}: {result}");
+
+            return result;
         }
         private readonly Dictionary<string, string> _applicationNameCache = new();
 
         public string LaunchApplication(string packageName)
         {
             if (string.IsNullOrWhiteSpace(packageName))
+            {
+                AppServices.Logger.Warning("Попытка запуска приложения: имя пакета не указано");
                 return "Package приложения не указан.";
+            }
 
             if (!IsDeviceConnected())
+            {
+                AppServices.Logger.Warning($"Попытка запуска {packageName}: устройство не подключено");
                 return "Устройство не подключено.";
+            }
 
-            return Execute(
+            AppServices.Logger.Log($"Запуск приложения: {packageName}");
+            string result = Execute(
                 $"shell monkey -p {packageName} " +
                 $"-c android.intent.category.LAUNCHER 1");
+
+            if (IsSuccessfulLaunchResult(result))
+                AppServices.Logger.Log($"✓ Приложение запущено: {packageName}");
+            else
+                AppServices.Logger.Warning($"⚠ Проблема при запуске {packageName}: {result}");
+
+            return result;
         }
 
         public bool IsSuccessfulLaunchResult(string result)
@@ -419,9 +458,18 @@ namespace GeelyEasyToolkit.Services
         public string ExecuteShellCommand(string command)
         {
             if (string.IsNullOrWhiteSpace(command))
+            {
+                AppServices.Logger.Warning("Попытка выполнения команды: команда не указана");
                 return "Команда не указана.";
+            }
 
-            return Execute($"shell {command}");
+            AppServices.Logger.Debug($"Выполнение команды: {command}");
+            string result = Execute($"shell {command}");
+
+            if (!string.IsNullOrWhiteSpace(result) && !result.Contains("error", StringComparison.OrdinalIgnoreCase))
+                AppServices.Logger.Debug($"✓ Команда выполнена успешно");
+
+            return result;
         }
 
         public string InstallApplication(string fileName)

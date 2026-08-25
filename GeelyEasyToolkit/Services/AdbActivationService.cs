@@ -20,6 +20,10 @@ namespace GeelyEasyToolkit.Services
 
         private void Write(string text)
         {
+            // Логируем в глобальный logger
+            AppServices.Logger.Log(text);
+
+            // Также отправляем событие для совместимости
             Log?.Invoke(text);
         }
 

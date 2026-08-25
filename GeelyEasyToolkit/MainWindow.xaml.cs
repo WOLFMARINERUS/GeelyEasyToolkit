@@ -84,6 +84,18 @@ namespace GeelyEasyToolkit
             AppServices.Navigation.Register("Logs",    _logsView);
             AppServices.Navigation.Register("Settings", _settingsView);
             AppServices.Navigation.Register("Developer", _developerView);
+
+            // Загружаем репозиторий при запуске приложения
+            AppServices.Repository.LoadRepository();
+            if (AppServices.Repository.Repository != null)
+            {
+                AppServices.Logger.Log("✓ Репозиторий загружен при запуске приложения");
+            }
+            else
+            {
+                AppServices.Logger.Warning("⚠ Репозиторий не загружен: файл repository.json не найден");
+            }
+
             HighlightButton(DashboardButton);
 
             // 👇 ДОБАВЛЕНО: подписка на тройной клик по заголовку
