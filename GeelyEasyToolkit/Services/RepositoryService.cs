@@ -11,21 +11,55 @@ namespace GeelyEasyToolkit.Services
     {
         public RepositoryModel? Repository { get; private set; }
 
+        public event Action? RepositoryChanged;
+
+        public string RepositoryFolder
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(
+                    AppServices.Settings.ApkFolder))
+                {
+                    return AppServices.Settings.ApkFolder;
+                }
+
+                return Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "Repository");
+            }
+        }
+
+        public string RepositoryJsonPath =>
+            Path.Combine(RepositoryFolder, "repository.json");
+
+        public bool LoadRepository()
+        {
+            return LoadRepository(RepositoryJsonPath);
+        }
+
         public bool LoadRepository(string path)
         {
             if (!File.Exists(path))
+            {
+                Repository ??= new RepositoryModel();
+                RepositoryChanged?.Invoke();
                 return false;
+            }
 
             string json = File.ReadAllText(path);
 
             Repository =
                 JsonSerializer.Deserialize<RepositoryModel>(json);
 
+            RepositoryChanged?.Invoke();
+
             return Repository != null;
         }
 
-        public bool SaveRepository(string path)
+        public bool SaveRepository(string? path = null)
         {
+            path ??= RepositoryJsonPath;
+
             if (Repository == null)
                 return false;
 
@@ -56,6 +90,8 @@ namespace GeelyEasyToolkit.Services
                     path,
                     json);
 
+                RepositoryChanged?.Invoke();
+
                 return true;
             }
             catch
@@ -66,31 +102,16 @@ namespace GeelyEasyToolkit.Services
 
         public string GetApplicationPath(ApplicationInfo app)
         {
-            string repositoryFolder;
-
-            if (!string.IsNullOrWhiteSpace(
-                AppServices.Settings.ApkFolder))
-            {
-                repositoryFolder =
-                    AppServices.Settings.ApkFolder;
-            }
-            else
-            {
-                repositoryFolder =
-                    Path.Combine(
-                        AppDomain.CurrentDomain.BaseDirectory,
-                        "Repository");
-            }
-
             return Path.Combine(
-                repositoryFolder,
+                RepositoryFolder,
                 app.Category,
                 app.FileName);
         }
 
-        internal List<ApplicationInfo> GetApplications()
+        public List<ApplicationInfo> GetApplications()
         {
-            throw new NotImplementedException();
+            return Repository?.Applications
+                ?? new List<ApplicationInfo>();
         }
     }
 }

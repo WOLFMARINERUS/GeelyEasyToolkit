@@ -14,21 +14,8 @@ namespace GeelyEasyToolkit.Views
     {
         private List<RepositoryApplicationItem> _applications = new();
 
-        private string RepositoryFolder
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(
-                    AppServices.Settings.ApkFolder))
-                {
-                    return AppServices.Settings.ApkFolder;
-                }
-
-                return Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    "Repository");
-            }
-        }
+        private string RepositoryFolder =>
+            AppServices.Repository.RepositoryFolder;
 
         private void AddApplicationButton_Click(
     object sender,

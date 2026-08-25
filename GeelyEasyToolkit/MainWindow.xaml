@@ -11,7 +11,8 @@
         Background="#1C1F26"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        Icon="Images/app.ico">
 
     <Grid>
 
@@ -254,7 +255,8 @@
 
                 <Button x:Name="LogsButton"
                         Style="{StaticResource NavigationButtonStyle}"
-                        Content="📄 Логи"/>
+                        Content="📄 Логи"
+                        Click="LogsButton_Click"/>
 
                 <Button x:Name="SettingsButton"
         Style="{StaticResource NavigationButtonStyle}"

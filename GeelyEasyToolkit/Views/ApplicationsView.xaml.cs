@@ -36,6 +36,38 @@ namespace GeelyEasyToolkit.Views
 
             // Начальная сортировка
             SortApplications();
+
+            AppServices.Profiles.CurrentProfileChanged +=
+                OnCurrentProfileChanged;
+
+            AppServices.Repository.RepositoryChanged +=
+                OnRepositoryChanged;
+
+            Loaded += ApplicationsView_Loaded;
+        }
+
+        private void ApplicationsView_Loaded(
+            object sender,
+            RoutedEventArgs e)
+        {
+            AppServices.Repository.LoadRepository();
+        }
+
+        private void OnRepositoryChanged()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _vm.SyncFromService();
+                _applicationsView?.Refresh();
+            });
+        }
+
+        private void OnCurrentProfileChanged(VehicleProfile? profile)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _applicationsView?.Refresh();
+            });
         }
 
 
@@ -47,6 +79,15 @@ namespace GeelyEasyToolkit.Views
         {
             if (item is not ApplicationInfo app)
                 return false;
+
+            VehicleProfile? profile =
+                AppServices.Profiles.GetCurrentProfile();
+
+            if (profile != null &&
+                !app.IsCompatibleWithProfile(profile.Name))
+            {
+                return false;
+            }
 
             string search =
                 SearchTextBox?.Text?.Trim() ?? "";
@@ -189,7 +230,7 @@ namespace GeelyEasyToolkit.Views
                 "Нажата кнопка установки.");
 
             var selectedApps =
-                _vm.Applications
+                GetVisibleApplications()
                     .Where(a => a.IsSelected)
                     .ToList();
 
@@ -368,14 +409,28 @@ namespace GeelyEasyToolkit.Views
         // ВЫБРАТЬ ВСЕ
         // =========================================================
 
+        private IEnumerable<ApplicationInfo> GetVisibleApplications()
+        {
+            if (_applicationsView != null)
+            {
+                return _applicationsView.Cast<ApplicationInfo>();
+            }
+
+            return _vm.Applications;
+        }
+
+
         private void SelectAllButton_Click(
             object sender,
             RoutedEventArgs e)
         {
-            bool selectAll = _vm.Applications.Any(
+            var visibleApps =
+                GetVisibleApplications().ToList();
+
+            bool selectAll = visibleApps.Any(
                 app => !app.IsSelected);
 
-            foreach (ApplicationInfo app in _vm.Applications)
+            foreach (ApplicationInfo app in visibleApps)
             {
                 app.IsSelected = selectAll;
             }

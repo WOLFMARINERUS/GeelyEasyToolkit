@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
+﻿using System.Collections.ObjectModel;
 using GeelyEasyToolkit.Models;
 using GeelyEasyToolkit.Services;
 
@@ -10,19 +8,13 @@ namespace GeelyEasyToolkit.ViewModels
     {
         public ObservableCollection<ApplicationInfo> Applications { get; } = new();
 
-        public ApplicationsViewModel()
+        public void SyncFromService()
         {
-            string repositoryPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "Repository",
-                "repository.json");
+            Applications.Clear();
 
-            if (AppServices.Repository.LoadRepository(repositoryPath))
+            foreach (var app in AppServices.Repository.GetApplications())
             {
-                foreach (var app in AppServices.Repository.Repository!.Applications)
-                {
-                    Applications.Add(app);
-                }
+                Applications.Add(app);
             }
         }
     }
