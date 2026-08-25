@@ -187,6 +187,8 @@ namespace GeelyEasyToolkit.Views
                 count > 0
                     ? $"Удалить выбранные ({count})"
                     : "Удалить выбранные";
+
+            AppServices.Logger.Debug($"Обновлена кнопка удаления: выбрано {count} приложений");
         }
 
         private void Launch_Click(
@@ -274,6 +276,7 @@ namespace GeelyEasyToolkit.Views
 
             if (selected.Count == 0)
             {
+                AppServices.Logger.Warning("Попытка удалить выбранные приложения: ничего не выбрано");
                 System.Windows.MessageBox.Show(
                     "Выберите хотя бы одно приложение.",
                     "Geely Easy Toolkit",
@@ -283,6 +286,7 @@ namespace GeelyEasyToolkit.Views
                 return;
             }
 
+            AppServices.Logger.Log($"Начало удаления выбранных приложений: {selected.Count} шт.");
             UninstallApplications(selected);
         }
 
@@ -290,6 +294,7 @@ namespace GeelyEasyToolkit.Views
     object sender,
     RoutedEventArgs e)
         {
+            AppServices.Logger.Debug("Чекбокс приложения изменился");
             UpdateDeleteButton();
         }
 

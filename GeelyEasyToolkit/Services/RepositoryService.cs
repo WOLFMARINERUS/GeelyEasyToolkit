@@ -34,26 +34,38 @@ namespace GeelyEasyToolkit.Services
 
         public bool LoadRepository()
         {
-            return LoadRepository(RepositoryJsonPath);
+            string path = RepositoryJsonPath;
+            AppServices.Logger.Debug($"Попытка загрузить репозиторий из: {path}");
+            return LoadRepository(path);
         }
 
         public bool LoadRepository(string path)
         {
             if (!File.Exists(path))
             {
+                AppServices.Logger.Warning($"Файл репозитория не найден: {path}");
                 Repository ??= new RepositoryModel();
                 RepositoryChanged?.Invoke();
                 return false;
             }
 
-            string json = File.ReadAllText(path);
+            try
+            {
+                string json = File.ReadAllText(path);
 
-            Repository =
-                JsonSerializer.Deserialize<RepositoryModel>(json);
+                Repository =
+                    JsonSerializer.Deserialize<RepositoryModel>(json);
 
-            RepositoryChanged?.Invoke();
+                AppServices.Logger.Log($"✓ Репозиторий загружен: {path}");
+                RepositoryChanged?.Invoke();
 
-            return Repository != null;
+                return Repository != null;
+            }
+            catch (Exception ex)
+            {
+                AppServices.Logger.Error($"Ошибка при загрузке репозитория: {ex.Message}");
+                return false;
+            }
         }
 
         public bool SaveRepository(string? path = null)
