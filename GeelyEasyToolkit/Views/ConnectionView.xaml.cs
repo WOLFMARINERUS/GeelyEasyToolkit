@@ -61,11 +61,6 @@ namespace GeelyEasyToolkit.Views
         // ВАШ СУЩЕСТВУЮЩИЙ КОД НИЖЕ (НИЧЕГО НЕ МЕНЯЛОСЬ)
         // ============================================================
 
-        private void CheckConnection_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateConnectionState(AppServices.Adb.IsDeviceConnected());
-        }
-
         private void Diagnostics_Click(object sender, RoutedEventArgs e)
         {
             DiagnosticsOutput.Clear();
@@ -212,6 +207,80 @@ namespace GeelyEasyToolkit.Views
             {
                 DiagnosticsOutput.AppendText(
                     "Процесс завершился с ошибкой.\n");
+            }
+        }
+
+        private async void LaunchScrcpy_Click(object sender, RoutedEventArgs e)
+        {
+            // Проверяем, что Scrcpy доступен
+            if (!AppServices.Scrcpy.IsScrcpyAvailable())
+            {
+                System.Windows.MessageBox.Show(
+                    "Scrcpy не найден.\n\n" +
+                    "Загрузите его с GitHub:\n" +
+                    "https://github.com/Genymobile/scrcpy\n\n" +
+                    "И распакуйте в папку: Scrcpy (рядом с приложением)\n\n" +
+                    "Или выберите кастомную папку в настройках.",
+                    "Scrcpy не найден",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+
+                AppServices.Logger.Warning("Попытка запустить Scrcpy, но он не найден");
+                return;
+            }
+
+            // Проверяем подключение устройства
+            if (!AppServices.Adb.IsDeviceConnected())
+            {
+                System.Windows.MessageBox.Show(
+                    "Устройство не подключено.\n\n" +
+                    "Подключите автомобиль через USB и попробуйте еще раз.",
+                    "Устройство не подключено",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Warning);
+
+                AppServices.Logger.Warning("Попытка запустить Scrcpy, но устройство не подключено");
+                return;
+            }
+
+            // Запускаем Scrcpy
+            bool success = await AppServices.Scrcpy.LaunchScrcpy();
+
+            if (success)
+            {
+                System.Windows.MessageBox.Show(
+                    "Scrcpy запущен успешно!",
+                    "Успех",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(
+                    "Не удалось запустить Scrcpy.\n\n" +
+                    "Проверьте логи для подробной информации об ошибке.",
+                    "Ошибка запуска",
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Error);
+            }
+        }
+
+        private void ScrcpyLink_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // Открываем ссылку на GitHub Scrcpy в браузере
+            try
+            {
+                System.Diagnostics.Process.Start(
+                    new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = ScrcpyService.SCRCPY_GITHUB,
+                        UseShellExecute = true
+                    });
+                AppServices.Logger.Log("Открыта ссылка на GitHub Scrcpy в браузере");
+            }
+            catch (Exception ex)
+            {
+                AppServices.Logger.Error($"Ошибка при открытии ссылки: {ex.Message}");
             }
         }
     }

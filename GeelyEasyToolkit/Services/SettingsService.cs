@@ -10,6 +10,8 @@ namespace GeelyEasyToolkit.Services
 
         public string ApkFolder { get; set; } = "";
 
+        public string ScrcpyPath { get; set; } = "";
+
         public double WindowWidth { get; set; } = 1400;
 
         public double WindowHeight { get; set; } = 1000;
@@ -57,6 +59,7 @@ namespace GeelyEasyToolkit.Services
 
                 AdbPath = data.AdbPath ?? "";
                 ApkFolder = data.ApkFolder ?? "";
+                ScrcpyPath = data.ScrcpyPath ?? "";
 
                 WindowWidth = data.WindowWidth;
                 WindowHeight = data.WindowHeight;
@@ -84,6 +87,7 @@ namespace GeelyEasyToolkit.Services
                 {
                     AdbPath = AdbPath,
                     ApkFolder = ApkFolder,
+                    ScrcpyPath = ScrcpyPath,
 
                     WindowWidth = WindowWidth,
                     WindowHeight = WindowHeight,
@@ -125,6 +129,8 @@ namespace GeelyEasyToolkit.Services
             public string? AdbPath { get; set; }
 
             public string? ApkFolder { get; set; }
+
+            public string? ScrcpyPath { get; set; }
 
             public double WindowWidth { get; set; }
 

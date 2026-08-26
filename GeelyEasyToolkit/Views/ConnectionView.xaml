@@ -108,13 +108,6 @@
 
                 <StackPanel Grid.Column="0">
 
-                    <Button x:Name="CheckConnectionButton"
-                        Content="Проверить подключение"
-                        Width="240"
-                        Height="45"
-                        HorizontalAlignment="Left"
-                        Click="CheckConnection_Click"/>
-
                     <Button Content="Диагностика ADB"
                         Width="240"
                         Height="45"
@@ -126,6 +119,29 @@
         Height="45"
         Margin="0,10,0,0"
         Click="ActivateAdb_Click"/>
+
+                    <Button x:Name="LaunchScrcpyButton"
+                        Content="🎬 Запустить Scrcpy"
+                        Width="240"
+                        Height="45"
+                        Margin="0,10,0,0"
+                        Click="LaunchScrcpy_Click">
+                        <Button.ToolTip>
+                            <ToolTip MaxWidth="400">
+                                <StackPanel>
+                                    <TextBlock Text="Для работы требуется Scrcpy" FontWeight="Bold" Foreground="White"/>
+                                    <TextBlock Text="Загрузите с GitHub:" Foreground="White" Margin="0,5,0,0"/>
+                                    <TextBlock Text="https://github.com/Genymobile/scrcpy" 
+                                               Foreground="#4FC3F7" 
+                                               TextDecorations="Underline"
+                                               Cursor="Hand"
+                                               MouseLeftButtonDown="ScrcpyLink_Click"/>
+                                    <TextBlock Text="" Margin="0,5,0,0"/>
+                                    <TextBlock Text="Распакуйте в папку: Scrcpy" Foreground="White"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
                 </StackPanel>
 
 

@@ -1,0 +1,105 @@
+﻿<Window x:Class="GeelyEasyToolkit.Views.ThanksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Благодарности"
+        Width="600"
+        Height="506"
+        WindowStartupLocation="CenterOwner"
+        Background="#2F3440"
+        Foreground="White"
+        ResizeMode="NoResize">
+
+    <Grid Margin="30">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Grid.Row="0"
+                   Text="Благодарности"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="White"
+                   Margin="0,0,0,20"/>
+
+
+        <StackPanel Grid.Row="1">
+
+            <TextBlock Text="Geely Easy Toolkit использует и опирается на"
+                       FontSize="15"
+                       Foreground="#C8CDD6"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,20"/>
+
+
+            <Border Background="#3A4050"
+                    CornerRadius="10"
+                    Padding="18"
+                    Margin="0,0,0,12">
+
+                <StackPanel>
+
+                    <TextBlock Text="Geely Docs"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="White"/>
+
+                    <TextBlock Text="Материалы и документация по головным устройствам Geely."
+                               Foreground="#C8CDD6"
+                               Margin="0,6,0,10"
+                               TextWrapping="Wrap"/>
+
+                    <Button Content="Открыть GitHub"
+                            Width="150"
+                            Height="34"
+                            HorizontalAlignment="Left"
+                            Click="GeelyDocsButton_Click"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <Border Background="#3A4050"
+                    CornerRadius="10"
+                    Padding="18" Height="125">
+
+                <StackPanel>
+
+                    <TextBlock Text="Genymobile / scrcpy"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Foreground="White"/>
+
+                    <TextBlock Text="Инструмент для отображения и управления Android-устройством."
+                               Foreground="#C8CDD6"
+                               Margin="0,6,0,10"
+                               TextWrapping="Wrap"/>
+
+                    <Button Content="Открыть GitHub"
+                            Width="150"
+                            Height="34"
+                            HorizontalAlignment="Left"
+                            Click="ScrcpyButton_Click"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </StackPanel>
+
+
+        <Button Grid.Row="2"
+                Content="Закрыть"
+                Width="120"
+                Height="36"
+                HorizontalAlignment="Right"
+                Margin="0,20,0,0"
+                Click="CloseButton_Click"/>
+
+    </Grid>
+
+</Window>
