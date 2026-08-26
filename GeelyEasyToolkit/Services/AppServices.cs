@@ -21,5 +21,7 @@
 
         public static ApplicationCacheService ApplicationCache { get; } =
     new ApplicationCacheService();
+
+        public static ScrcpyService Scrcpy { get; } = new ScrcpyService();
     }
 }

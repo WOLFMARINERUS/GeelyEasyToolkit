@@ -105,6 +105,31 @@ namespace GeelyEasyToolkit
             }
         }
 
+        private void ThanksButton_Click(
+    object sender,
+    RoutedEventArgs e)
+        {
+            ThanksWindow window =
+                new ThanksWindow();
+
+            window.Owner = this;
+
+            window.ShowDialog();
+        }
+
+
+        private void DonateButton_Click(
+            object sender,
+            RoutedEventArgs e)
+        {
+            DonateWindow window =
+                new DonateWindow();
+
+            window.Owner = this;
+
+            window.ShowDialog();
+        }
+
         // 👇 ДОБАВЛЕНО: обработчик события SourceInitialized для изменения цвета заголовка
         private void MainWindow_SourceInitialized(object sender, EventArgs e)
         {

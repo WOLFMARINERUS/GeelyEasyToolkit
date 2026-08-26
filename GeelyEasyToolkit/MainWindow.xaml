@@ -214,62 +214,76 @@
 
         </Border>
 
-        <!-- ===================================================== -->
-        <!-- ЛЕВОЕ МЕНЮ (строка 2, колонна 0) -->
-        <!-- ===================================================== -->
+        <!-- Левое меню (строка 2, колонна 0) -->
         <Border Grid.Row="2"
-                Grid.Column="0"
-                Background="#252932" HorizontalAlignment="Left" Width="200">
+        Grid.Column="0"
+        Background="#252932" HorizontalAlignment="Left" Width="200">
 
-            <StackPanel Margin="15">
+            <DockPanel LastChildFill="False" Margin="15">
 
-                <Button x:Name="DashboardButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="🏠 Dashboard"
-                        Click="DashboardButton_Click"/>
+                <!-- Основные кнопки навигации (занимают всё пространство) -->
+                <StackPanel DockPanel.Dock="Top" Margin="0">
+                    <Button x:Name="DashboardButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="🏠 Dashboard"
+                    Click="DashboardButton_Click"/>
 
-                <Button x:Name="ConnectionButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="🔌 Подключение"
-                        Click="ConnectionButton_Click"/>
+                    <Button x:Name="ConnectionButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="🔌 Подключение"
+                    Click="ConnectionButton_Click"/>
 
-                <Button x:Name="ApplicationsButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="📦 Приложения"
-                        Click="ApplicationsButton_Click"/>
+                    <Button x:Name="ApplicationsButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="📦 Приложения"
+                    Click="ApplicationsButton_Click"/>
 
-                <Button x:Name="ProfilesButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="🚗 Профили"
-                        Click="ProfilesButton_Click"/>
+                    <Button x:Name="ProfilesButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="🚗 Профили"
+                    Click="ProfilesButton_Click"/>
 
-                <Button x:Name="RepositoryButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="📁 Репозиторий"
-                        Click="RepositoryButton_Click"/>
+                    <Button x:Name="RepositoryButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="📁 Репозиторий"
+                    Click="RepositoryButton_Click"/>
 
-                <Button x:Name="InstalledApplicationsButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="📱 Установленные"
-                        Click="InstalledApplicationsButton_Click"/>
+                    <Button x:Name="InstalledApplicationsButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="📱 Установленные"
+                    Click="InstalledApplicationsButton_Click"/>
 
-                <Button x:Name="LogsButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="📄 Логи"
-                        Click="LogsButton_Click"/>
+                    <Button x:Name="LogsButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="📄 Логи"
+                    Click="LogsButton_Click"/>
 
-                <Button x:Name="SettingsButton"
-        Style="{StaticResource NavigationButtonStyle}"
-        Content="⚙ Настройки"
-        Click="SettingsButton_Click"/>
+                    <Button x:Name="SettingsButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="⚙ Настройки"
+                    Click="SettingsButton_Click"/>
 
-                <Button x:Name="DeveloperButton"
-                        Style="{StaticResource NavigationButtonStyle}"
-                        Content="🛠 Разработчик"
-                        Visibility="Collapsed"
-                        Click="DeveloperButton_Click"/>
+                    <Button x:Name="DeveloperButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="🛠 Разработчик"
+                    Visibility="Collapsed"
+                    Click="DeveloperButton_Click"/>
+                </StackPanel>
 
-            </StackPanel>
+                <!-- Кнопки "Благодарности" и "Поддержать" внизу -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="0">
+                    <Button x:Name="ThanksButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="❤️ Благодарности"
+                    Click="ThanksButton_Click"/>
+
+                    <Button x:Name="DonateButton"
+                    Style="{StaticResource NavigationButtonStyle}"
+                    Content="💰 Поддержать"
+                    Click="DonateButton_Click"/>
+                </StackPanel>
+
+            </DockPanel>
 
         </Border>
 
@@ -306,7 +320,7 @@
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
-                           Text="v1.0"
+                           Text="Wolfmarine v1.4.0"
                            Foreground="Gray"
                            VerticalAlignment="Center"/>
 

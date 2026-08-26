@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.ECS" Version="4.0.102" />
+    <PackageReference Include="QRCoder" Version="1.8.0" />
   </ItemGroup>
 
 </Project>
